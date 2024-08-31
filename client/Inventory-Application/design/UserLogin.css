@@ -1,0 +1,55 @@
+.ul-Container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5% auto;
+}
+
+.ul-Box-Container{
+    background-color: rgb(56, 56, 56);
+    border-radius: 20px;
+    padding: 50px 20px;
+}
+
+.ul-Title{
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.ul-Label{
+    margin: 5px;
+    font-size: 12px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+}
+
+.ul-Control{
+    border: none;
+    margin: 10px 0;
+    padding: 10px 40px;
+    border-radius: 15px;
+}
+
+.ul-Control:focus{
+    outline: none;
+}
+
+.ul-Button-Container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ul-Button{
+    border: none;
+    border-radius: 15px;
+    padding: 10px 50px;
+}
+
+.ul-Button:hover{
+    transition: 1s ease;
+    background-color: rgb(165, 165, 165);
+}

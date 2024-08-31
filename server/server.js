@@ -4,12 +4,14 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import User from './Models/User.js'
 
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
+app.use(express.json());
 
 mongoose.connect(process.env.MONGO_API,{
     dbName: 'inventory'
@@ -17,10 +19,25 @@ mongoose.connect(process.env.MONGO_API,{
 .then(()=> console.log('MongoDB Connected'))
 .catch(error => console.error(error));
 
-app.use(express.json());
-
 app.get('/', (req, res)=>{
-    res.send('Hello World');    
+    res.send('The Server is online.');    
+});
+
+app.post('/login', async (req, res)=> {
+    const { userName, passWord } = req.body;
+
+    try{
+        const user = await User.findOne({ userName });
+
+        if(!user || user.passWord !== passWord){
+            return res.status(401).json({message: 'Invalid username or password'});
+        }
+
+        res.json({message: 'Login Successful'});
+
+    }catch(error){
+        res.status(500).json({message: 'Server Error'});
+    }
 });
 
 app.get('/find_users', async (req, res)=> {
@@ -39,6 +56,7 @@ app.get('/find_users', async (req, res)=> {
     }
 });
 
+/*
 app.post('/new_user', async (req, res)=>{
     try{
         const result = await User.save();
@@ -86,7 +104,7 @@ app.delete('/delete_user/:id', async (req, res)=> {
         res.status(404).json({message: 'Error on Deleting Information of User'});
     }
 });
-
+*/
 app.listen(PORT, ()=>{
     console.log(`The Server is running on http://localhost:${PORT}`);
 });
