@@ -24,7 +24,7 @@ export default function UserLogin({ setIsAuthenticated }){
 
             if(response.data){
                 setIsAuthenticated(true);
-                localStorage.setItem('username', userName);
+                localStorage.setItem('isAuthenticated','true');
                 navigate('/dashboard');
             }
         }catch(error){

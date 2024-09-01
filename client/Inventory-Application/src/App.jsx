@@ -5,16 +5,9 @@ import Dashboard from '../pages/subpages/Dashboard'
 import './App.css'
 
 export default function App() {
-  const[isAuthenticated, setIsAuthenticated] = useState(false);
-
-  //TODO: Restructure of reloading if it is already in the current page 
-  //      but returning to the login page
-  useEffect(()=>{
-    const storedUsername = localStorage.getItem('username');
-    if(storedUsername){
-      setIsAuthenticated(true);
-    }
-  },[]);
+  const[isAuthenticated, setIsAuthenticated] = useState(()=>{
+    return localStorage.getItem('isAuthenticated') === 'true';
+  });
 
   return (
     <>

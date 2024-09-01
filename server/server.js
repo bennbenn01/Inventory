@@ -4,7 +4,6 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import User from './Models/User.js'
 
-
 dotenv.config();
 
 const app = express();
@@ -47,7 +46,7 @@ app.get('/find_users', async (req, res)=> {
         if(result){
             res.status(200).json(result);
         }else{
-            res.status(404).json({message: 'User was not found'});
+            return res.status(404).json({message: 'User was not found'});
         }
     }
     catch(error){
@@ -56,7 +55,6 @@ app.get('/find_users', async (req, res)=> {
     }
 });
 
-/*
 app.post('/new_user', async (req, res)=>{
     try{
         const result = await User.save();
@@ -64,7 +62,7 @@ app.post('/new_user', async (req, res)=>{
         if(result){
             res.status(201).json({message: 'User created successfully'});
         }else{
-            res.status(404).json({message: 'User was not found'});
+            return res.status(404).json({message: 'User was not found'});
         }
     }
     catch(error){
@@ -73,14 +71,15 @@ app.post('/new_user', async (req, res)=>{
     }
 });
 
-app.post('/update_user', async (req, res)=> {
+app.put('/update_user/:id', async (req, res)=> {
     try{
-        const result = await User.updateOne();
+        const userId = req.params.id;
+        const result = await User.updateOne(userId);
 
         if(result){
             res.status(200).json({mesage: 'User updated successfully'});
         }else{
-            res.status(404).json({message: 'User was not found'});
+            return res.status(404).json({message: 'User was not found'});
         }
     }catch(error){
         console.error(error);
@@ -96,7 +95,7 @@ app.delete('/delete_user/:id', async (req, res)=> {
         if(result){
             res.status(202).json({message: 'User deleted successfully'});
         }else{
-            res.status(404).json({message: 'User was not found'});
+            return res.status(404).json({message: 'User was not found'});
         }
     }
     catch(error){
@@ -104,7 +103,7 @@ app.delete('/delete_user/:id', async (req, res)=> {
         res.status(404).json({message: 'Error on Deleting Information of User'});
     }
 });
-*/
+
 app.listen(PORT, ()=>{
     console.log(`The Server is running on http://localhost:${PORT}`);
 });
