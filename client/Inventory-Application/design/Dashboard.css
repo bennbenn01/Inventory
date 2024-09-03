@@ -1,17 +1,7 @@
 .d-Container{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     margin: 5% auto;
-}
-
-.d-Box-Container{
-    background-color: rgb(56, 56, 56);
-    border-radius: 20px;
-    padding: 50px 20px;
-}
-
-.tc-Header{
-    color: white;
 }

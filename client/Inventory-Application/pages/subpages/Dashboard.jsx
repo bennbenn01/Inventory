@@ -1,9 +1,9 @@
-import { Container, Tables, Button } from "react-bootstrap"
+import { Container, Button } from "react-bootstrap"
 import '/design/Dashboard.css'
 import axios from 'axios'
 
 export default function Dashboard(){
-
+    //TODO: Create a UI for Dashboard
     const HandleFindUser = async (e)=> {
         e.preventDefault();
 
@@ -18,8 +18,6 @@ export default function Dashboard(){
                 }
             })
 
-            //Show Information in a Message Box
-            
         }catch(error){
             console.error(error);
         }
@@ -33,8 +31,6 @@ export default function Dashboard(){
         }catch(error){
             console.error(error);
         }
-
-        //
     }
 
     const HandleUpdateUser = async (e)=> {
@@ -54,8 +50,6 @@ export default function Dashboard(){
         }catch(error){
             console.error(error);
         }
-
-        //
     }
 
     const HandleDeleteUser = async (e)=> {
@@ -75,24 +69,15 @@ export default function Dashboard(){
         }catch(error){
             console.error(error);
         }
-
-        //
     }
 
     return(
         <>
             <Container className='d-Container'>
-                <Container className='d-Box-Container'>
+                
 
-                    <Container className='d-Button-Container'>
-                        <Button>Find User</Button>
+                <Container className='d-Main-Container'>
 
-                        <Button>Add New User</Button>
-
-                        <Button>Update User</Button>
-
-                        <Button>Delete User</Button>
-                    </Container>
                 </Container>
             </Container>
         </>

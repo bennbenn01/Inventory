@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "Benedict Beralde",
   "license": "ISC",
-  "description": "",
+  "description": "Server-Side for Inventory",
   "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
