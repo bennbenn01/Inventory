@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "dev": "nodemon server.js", 
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "Benedict Beralde",
   "license": "ISC",
-  "description": "Server-Side for Inventory",
+  "description": "Back-end Server for Inventory",
   "type": "module",
   "dependencies": {
     "cors": "^2.8.5",

@@ -1,5 +1,5 @@
-import { Container, Button } from "react-bootstrap"
-import '/design/Dashboard.css'
+import { Container } from "react-bootstrap"
+import '../../design/Dashboard.css'
 import axios from 'axios'
 
 export default function Dashboard(){

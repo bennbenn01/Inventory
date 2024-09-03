@@ -52,6 +52,11 @@
     background-color: rgb(36, 36, 36);
 }
 
+.header-Sphere-Dropdown:not(:hover){
+    transition: 1s ease;
+    background-color: white;
+}
+
 .header-Dropdown-Menu-Item{
     color: white;
     text-decoration: none;

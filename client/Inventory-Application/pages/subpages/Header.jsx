@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap'
-import '/design/Header.css'
+import '../../design/Header.css'
 
 export default function Header(){
     const navigate = useNavigate();
