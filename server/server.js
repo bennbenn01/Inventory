@@ -3,11 +3,18 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import User from './Models/User.js'
+import fs from 'fs'
+import { format } from 'date-fns'
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const fileSystem = fs;
+const now = Date();
+const formattedDate = format(now, 'HH:mm a MM/dd/yyyy');
+const logsFilePath = './Logs/logs.txt';
+const logsDirPath = './Logs';
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +31,7 @@ app.get('/', (req, res)=>{
 
 app.post('/login', async (req, res)=> {
     const { userName, passWord } = req.body;
+    const login = `User:\t${userName} \t\tDate: ${formattedDate}\t\t Status: Log-in\n`;
 
     try{
         const user = await User.findOne({ userName });
@@ -32,12 +40,48 @@ app.post('/login', async (req, res)=> {
             return res.status(401).json({message: 'Invalid username or password'});
         }
 
-        res.json({message: 'Login Successful'});
+        if(!fileSystem.existsSync(logsDirPath)){
+            fileSystem.mkdirSync(logsDirPath);
+            console.log("Logs Directory was been created");
+        }
 
+        if(!fileSystem.existsSync(logsFilePath)){
+            fileSystem.writeFileSync(logsFilePath, login);
+            console.log("Logs was been created");
+        }else{
+            fileSystem.appendFileSync(logsFilePath, login);
+            console.log("Logs was been updated");
+        }
+
+        res.json({message: 'Login Successful'});
     }catch(error){
         res.status(500).json({message: 'Server Error'});
     }
 });
+
+app.post('/logout', async (req, res)=>{
+    const { userName } = req.body;
+    const logout = `User:\t${userName} \t\tDate: ${formattedDate}\t\t Status: Log-out\n`;
+
+    try{
+        if(!fileSystem.existsSync(logsDirPath)){
+            fileSystem.mkdirSync(logsDirPath, logout);
+            console.log("Logs Directory was been created");
+        }
+    
+        if(!fileSystem.existsSync(logsFilePath)){
+            fileSystem.writeFileSync(logsFilePath, logout);
+            console.log("Logs was been created");
+        }else{
+            fileSystem.appendFileSync(logsFilePath, logout);
+            console.log("Logs was been updated");
+        }
+
+        res.json({message: 'Logout'});
+    }catch(error){
+        res.status(500).json({message: 'Server Error'});
+    }
+})
 
 app.get('/find_users', async (req, res)=> {
     try{

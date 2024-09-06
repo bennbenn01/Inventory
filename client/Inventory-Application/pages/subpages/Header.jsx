@@ -1,14 +1,29 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap'
+import axios from 'axios'
 import '../../design/Header.css'
 
 export default function Header(){
     const navigate = useNavigate();
 
-    const handleLogOut = (e)=> {
-        localStorage.removeItem('isAuthenticated');
-        navigate('/login');
+    //Handle the username it should not be blank
+    const handleLogOut = async (e)=> {
+        try{
+            const response = await axios.post(import.meta.env.VITE_APP_SERVER_LOGOUT, {
+
+            }, {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            })
+
+            if(response.status === 200){
+                localStorage.removeItem('isAuthenticated');
+                navigate('/login');
+            }
+        }catch(error){
+            console.error(error);
+        }
     }
 
     return(
