@@ -31,7 +31,7 @@ app.get('/', (req, res)=>{
 
 app.post('/login', async (req, res)=> {
     const { userName, passWord } = req.body;
-    const login = `User:\t${userName} \t\tDate: ${formattedDate}\t\t Status: Log-in\n`;
+    const login = `Date: ${formattedDate}\t Status: Log-in \tUser: ${userName} \t\t\n`;
 
     try{
         const user = await User.findOne({ userName });
@@ -61,7 +61,7 @@ app.post('/login', async (req, res)=> {
 
 app.post('/logout', async (req, res)=>{
     const { userName } = req.body;
-    const logout = `User:\t${userName} \t\tDate: ${formattedDate}\t\t Status: Log-out\n`;
+    const logout = `Date: ${formattedDate}\t Status: Log-out \tUser: ${userName} \t\t\n`;
 
     try{
         if(!fileSystem.existsSync(logsDirPath)){

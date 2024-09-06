@@ -5,6 +5,7 @@ node_modules/
 .env
 
 # Logs
+Logs/
 *.log
 
 # OS-specific files

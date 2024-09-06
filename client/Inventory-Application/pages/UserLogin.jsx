@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Form, Container, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { useUser } from '../reusing_Context/userContext'
 import '../design/UserLogin.css'
 import axios from 'axios'
 
 export default function UserLogin({ setIsAuthenticated }){
-    const[userName, setUsername] = useState('');
+    const{userName, setUsername} = useUser();
     const[passWord, setPassword] = useState('');
     const navigate = useNavigate();
 

@@ -1,16 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap'
+import { useUser } from '../../reusing_Context/userContext'
 import axios from 'axios'
 import '../../design/Header.css'
 
 export default function Header(){
     const navigate = useNavigate();
-
-    //Handle the username it should not be blank
+    const{ userName } = useUser();
+    
     const handleLogOut = async (e)=> {
         try{
             const response = await axios.post(import.meta.env.VITE_APP_SERVER_LOGOUT, {
-
+                userName: userName,
             }, {
                 headers: {
                     "Content-Type": 'application/json'
