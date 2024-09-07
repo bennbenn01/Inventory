@@ -1,7 +1,52 @@
 .d-Container{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-wrap: wrap;
+    margin-inline: auto;
+    margin: 0 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.box{
+    display: flex;
     align-items: center;
-    margin: 5% auto;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.d-Box-Container-1{
+    flex: 0;
+    background-color: rgb(70, 70, 70);
+    padding: 20px;
+}
+
+.d-Navbar-Container{
+    margin: 100px 20px;
+}
+
+.d-Navbar-Brand{
+    font-size: 25px;
+    font-family: sans-serif;
+    font-weight: bold;  
+    color: white;
+    text-align: center;
+    cursor: default;
+}
+
+.d-Nav-Container{
+    text-align: center;
+}
+
+.d-Nav-Item{
+    margin: 20px 0;
+    color: white;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.d-Box-Container-2{
+    flex: 1;
+    background-color: rgb(70, 70, 70);
+    padding: 20px;
 }

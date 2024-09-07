@@ -1,16 +1,21 @@
 .header-Navbar-Container{
-    margin: 20px 15px;
+    margin: 20px 20px;
 }
 
 .header-Navbar-Box-Container{
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
     padding: 15px;
     background-color: rgb(61, 61, 61);
+    max-width: 100%;
+    width: 100%;
     border-radius: 25px;
+    position: relative;
 }
 
 .navbar-Title{
+    margin: 0 15px;
     font-size: 30px;
     font-family: sans-serif;
     font-weight: bold;
@@ -26,7 +31,7 @@
     border: none;
     background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
-    margin: 0 20px
+    margin: 0 20px;
 }
 
 .header-Dropdown-Menu{

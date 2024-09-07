@@ -1,4 +1,4 @@
-import { Container } from "react-bootstrap"
+import { Container, Navbar, Nav } from "react-bootstrap"
 import '../../design/Dashboard.css'
 import axios from 'axios'
 
@@ -74,10 +74,20 @@ export default function Dashboard(){
     return(
         <>
             <Container className='d-Container'>
-                
+                <Container className="box d-Box-Container-1">
+                    <Navbar className='d-Navbar-Container'>
+                        <Navbar.Brand className='d-Navbar-Brand'>Username</Navbar.Brand>
+                        <Nav className='d-Nav-Container'>
+                            <Nav.Item className='d-Nav-Item'>Add User</Nav.Item>
+                            <Nav.Item className='d-Nav-Item'>Show Users</Nav.Item>
+                            <Nav.Item className='d-Nav-Item'>Update User</Nav.Item>
+                            <Nav.Item className='d-Nav-Item'>Delete User</Nav.Item>
+                        </Nav>
+                    </Navbar>
+                </Container>
 
-                <Container className='d-Main-Container'>
-
+                <Container className='box d-Box-Container-2'>
+                    Main
                 </Container>
             </Container>
         </>
