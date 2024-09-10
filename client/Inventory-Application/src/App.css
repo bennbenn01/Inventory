@@ -1,6 +1,9 @@
+:root{
+    min-width: 600px;
+    min-height: 546px;
+}
+
 body{
     background-color: black;
     margin-inline: auto;
-    min-width: 300px;
-    min-height: 546px;
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Form, Container, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { useUser } from '../reusing_Context/userContext'
+import { useUser } from '../reusing_Context/UserContext.jsx'
 import '../design/UserLogin.css'
 import axios from 'axios'
 
@@ -23,10 +23,12 @@ export default function UserLogin({ setIsAuthenticated }){
                 }
             })
 
-            if(response.data){
+            if(response.status === 200){
                 setIsAuthenticated(true);
-                localStorage.setItem('isAuthenticated','true');
+                localStorage.setItem('isAuthenticated', 'true');
                 navigate('/dashboard');
+            }else{
+                console.error('Login failed');
             }
         }catch(error){
             console.error(error);

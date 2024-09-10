@@ -15,6 +15,7 @@ export default function Header(){
     }
 
     const handleLogOut = async (e)=> {
+        e?.preventDefault();
         try{
             const response = await axios.post(import.meta.env.VITE_APP_SERVER_LOGOUT, {
                 userName: userName,
@@ -25,6 +26,7 @@ export default function Header(){
             })
 
             if(response.status === 200){
+                setIsAuthenticated(false);
                 localStorage.removeItem('isAuthenticated');
                 navigate('/login');
             }

@@ -25,7 +25,11 @@ mongoose.connect(process.env.MONGO_API,{
 .then(()=> console.log('MongoDB Connected'))
 .catch(error => console.error(error));
 
-app.get('/', (req, res)=>{
+function authorization(req, res){
+    res.redirect('/error');
+}
+
+app.get('/', authorization, (req, res)=>{
     res.send('The Server is online.');    
 });
 
@@ -54,12 +58,14 @@ app.post('/login', async (req, res)=> {
         }
 
         res.json({message: 'Login Successful'});
+
     }catch(error){
+        console.error(error);
         res.status(500).json({message: 'Server Error'});
     }
 });
 
-app.post('/logout', async (req, res)=>{
+app.post('/logout', (req, res)=>{
     const { userName } = req.body;
     const logout = `Date: ${formattedDate}\t Status: Log-out \tUser: ${userName} \t\t\n`;
 
@@ -78,22 +84,23 @@ app.post('/logout', async (req, res)=>{
         }
 
         res.json({message: 'Logout'});
+
     }catch(error){
+        console.error(error);
         res.status(500).json({message: 'Server Error'});
     }
-})
+});
 
-app.get('/find_users', async (req, res)=> {
+app.get('/find_users', authorization, async (req, res)=> {
     try{
-        const result = await User.find();
+        const result = await User.find(query);
 
-        if(result){
+        if(result.length > 0){
             res.status(200).json(result);
         }else{
             return res.status(404).json({message: 'User was not found'});
         }
-    }
-    catch(error){
+    }catch(error){
         console.error(error);
         res.status(404).json({message: 'Error on Receiving Information of User'});
     }
@@ -103,13 +110,12 @@ app.post('/new_user', async (req, res)=>{
     try{
         const result = await User.save();
 
-        if(result){
+        if(result.status === 200){
             res.status(201).json({message: 'User created successfully'});
         }else{
             return res.status(404).json({message: 'User was not found'});
         }
-    }
-    catch(error){
+    }catch(error){
         console.error(error);
         res.status(404).json({message: 'Error on Saving Information of User'});
     }
@@ -141,11 +147,14 @@ app.delete('/delete_user/:id', async (req, res)=> {
         }else{
             return res.status(404).json({message: 'User was not found'});
         }
-    }
-    catch(error){
+    }catch(error){
         console.error(error);
         res.status(404).json({message: 'Error on Deleting Information of User'});
     }
+});
+
+app.get('/error', (req, res)=> {
+    res.send('404 Error');
 });
 
 app.listen(PORT, ()=>{
