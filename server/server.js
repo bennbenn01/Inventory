@@ -25,11 +25,7 @@ mongoose.connect(process.env.MONGO_API,{
 .then(()=> console.log('MongoDB Connected'))
 .catch(error => console.error(error));
 
-function authorization(req, res){
-    res.redirect('/error');
-}
-
-app.get('/', authorization, (req, res)=>{
+app.get('/', (req, res)=>{
     res.send('The Server is online.');    
 });
 
@@ -91,9 +87,31 @@ app.post('/logout', (req, res)=>{
     }
 });
 
-app.get('/find_users', authorization, async (req, res)=> {
+app.get('/find_user', async (req, res)=> {
+    const {firstName, lastName, userName} = req.query;
+
     try{
-        const result = await User.find(query);
+        const query = {};
+        if(firstName) query.firstName = firstName;
+        if(lastName) query.lastName = lastName;
+        if(userName) query.userName = userName;
+
+        const result = await User.findOne(query);   
+
+        if(result){
+            res.status(200).json(result);
+        }else{
+            return res.status(404).json({message: 'User was not found'});
+        }
+    }catch(error){
+        console.error(error);
+        res.status(404).json({message: 'Error on Receiving Information of User'});
+    }
+});
+
+app.get('/find_users', async (req, res)=> {
+    try{
+        const result = await User.find();
 
         if(result.length > 0){
             res.status(200).json(result);

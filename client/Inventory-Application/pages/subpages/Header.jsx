@@ -26,7 +26,6 @@ export default function Header(){
             })
 
             if(response.status === 200){
-                setIsAuthenticated(false);
                 localStorage.removeItem('isAuthenticated');
                 navigate('/login');
             }

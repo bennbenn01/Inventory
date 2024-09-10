@@ -74,15 +74,28 @@
     padding: 10px;
     border: none;
     border-radius: 10px;
+    margin: 5px 0;
 }
 
-.d-Form-Button{
+.d-Form-Button-Container{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.d-Form-Button-1, .d-Form-Button-2{
     border: none;
     border-radius: 10px;
-    padding: 5px;
+    padding: 10px;
 }
 
-.d-Form-Button:hover{
+.d-Form-Button-1:hover{
+    transition: 1s ease;
+    background-color: rgb(145, 145, 145);
+}
+
+.d-Form-Button-2:hover{
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
 }
@@ -95,7 +108,19 @@
 }
 
 .d-THead-Container, .d-TBody-Container{
-    font-size: 18px;
+    font-size: 15px;
     font-family: sans-serif;
     color: white;
+}
+
+.d-TH-Row{
+    padding: 0 5px;
+}
+
+.d-TD-Colspan{
+    text-align: center;
+}
+
+.d-TD-Row{
+    text-align: center;
 }
