@@ -1,0 +1,68 @@
+.d-ShowUser-Form-Container{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    padding: 50px;
+}
+
+.d-ShowUser-Form-Label{
+    font-family: sans-serif;
+    font-size: 18px;
+    color: white;
+}
+
+.d-ShowUser-Form-Control{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.d-ShowUser-Form-Button-Container{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.d-ShowUser-Form-Button-1, .d-ShowUser-Form-Button-2{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.d-ShowUser-Form-Button-1:hover{
+    transition: 1s ease;
+    background-color: rgb(145, 145, 145);
+}
+
+.d-ShowUser-Form-Button-2:hover{
+    transition: 1s ease;
+    background-color: rgb(145, 145, 145);
+}
+
+.d-ShowUser-Table-Container{
+    background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.d-ShowUser-THead-Container, .d-ShowUser-TBody-Container{
+    font-size: 15px;
+    font-family: sans-serif;
+    color: white;
+}
+
+.d-ShowUser-TH-Row{
+    padding: 0 5px;
+}
+
+.d-ShowUser-TD-Colspan{
+    text-align: center;
+}
+
+.d-ShowUser-TD-Row{
+    text-align: center;
+}

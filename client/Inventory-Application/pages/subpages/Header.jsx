@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap'
-import { useUser } from '../../reusing_Context/userContext'
+import { useUser } from '../../reusing_Context/UserContext.jsx'
 import axios from 'axios'
 import '../../design/Header.css'
 

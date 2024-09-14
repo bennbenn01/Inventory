@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Container, Table, Form, Button } from 'react-bootstrap'
-import '../../../design/Dashboard.css'
+import '../../../design/ShowUsers.css'
 import axios from 'axios'  
 
 export default function ShowUser(){
@@ -37,58 +37,58 @@ export default function ShowUser(){
 
     return(
         <>
-            <Form className='d-Form-Container'>
-                <Form.Label className='d-Form-Label'>First Name</Form.Label>
+            <Form className='d-ShowUser-Form-Container'>
+                <Form.Label className='d-ShowUser-Form-Label'>First Name</Form.Label>
                 <Form.Control 
                     type='text' 
                     placeholder='Enter first name'
                     value={firstName}
-                    className='d-Form-Control'
+                    className='d-ShowUser-Form-Control'
                     onChange={(e)=> setFirstname(e.target.value)}/><br/>
 
-                <Form.Label className='d-Form-Label'>Last Name</Form.Label>
+                <Form.Label className='d-ShowUser-Form-Label'>Last Name</Form.Label>
                 <Form.Control 
                     type='text' 
                     placeholder='Enter last name'
                     value={lastName}
-                    className='d-Form-Control'
+                    className='d-ShowUser-Form-Control'
                     onChange={(e)=> setLastname(e.target.value)}/><br/>
             
-                <Container className='d-Form-Button-Container'>
+                <Container className='d-ShowUser-Form-Button-Container'>
                     <Button 
-                        className='d-Form-Button-1'
+                        className='d-ShowUser-Form-Button-1'
                         onClick={handleFindUser}
                         >Show User</Button>
 
                     <Button 
-                        className='d-Form-Button-2'
+                        className='d-ShowUser-Form-Button-2'
                         onClick={handleFindUsers}
                         >Show All Users</Button>
                 </Container>
             </Form>
 
-            <Container className='d-Table-Container'>
-                <Table striped bordered className='d-Table-Main-Container'>
-                    <thead className='d-THead-Container'>
+            <Container className='d-ShowUser-Table-Container'>
+                <Table striped bordered className='d-ShowUser-Table-Main-Container'>
+                    <thead className='d-ShowUser-THead-Container'>
                         <tr>
-                            <th className='d-TH-Row'>ID</th>
-                            <th className='d-TH-Row'>First Name</th>
-                            <th className='d-TH-Row'>Last Name</th>
-                            <th className='d-TH-Row'>User Name</th>
+                            <th className='d-ShowUser-TH-Row'>ID</th>
+                            <th className='d-ShowUser-TH-Row'>First Name</th>
+                            <th className='d-ShowUser-TH-Row'>Last Name</th>
+                            <th className='d-ShowUser-TH-Row'>User Name</th>
                         </tr>
                     </thead>
-                    <tbody className='d-TBody-Container'>
+                    <tbody className='d-ShowUser-TBody-Container'>
                     {users.length === 0 ? (
                         <tr>
-                            <td colSpan={4} className='d-TD-Colspan'>No Users Found</td>
+                            <td colSpan={4} className='d-ShowUser-TD-Colspan'>No Users Found</td>
                         </tr>
                     ) : (
                         users.map((user, i)=> (
                         <tr key={i}>
-                            <td className='d-TD-Row'>{user._id || 'N/A'}</td>
-                            <td className='d-TD-Row'>{user.firstName || 'N/A'}</td>
-                            <td className='d-TD-Row'>{user.lastName || 'N/A'}</td>
-                            <td className='d-TD-Row'>{user.userName || 'N/A'}</td>
+                            <td className='d-ShowUser-TD-Row'>{user._id || 'N/A'}</td>
+                            <td className='d-ShowUser-TD-Row'>{user.firstName || 'N/A'}</td>
+                            <td className='d-ShowUser-TD-Row'>{user.lastName || 'N/A'}</td>
+                            <td className='d-ShowUser-TD-Row'>{user.userName || 'N/A'}</td>
                         </tr>
                         ))
                     )}
