@@ -4,7 +4,11 @@ import { UserProvider } from '../reusing_Context/UserContext.jsx'
 import UserLogin from '../pages/userLogin'
 import Header from '../pages/subpages/Header.jsx'
 import Dashboard from '../pages/subpages/Dashboard.jsx'
+import ShowUser from '../pages/subpages/subdashboard/ShowUsers.jsx'
 import './App.css'
+import AddUser from '../pages/subpages/subdashboard/AddUser.jsx'
+import UpdateUser from '../pages/subpages/subdashboard/UpdateUser.jsx'
+import DeleteUser from '../pages/subpages/subdashboard/DeleteUser.jsx'
 
 export default function App() {
   const[isAuthenticated, setIsAuthenticated] = useState(()=>{
@@ -20,7 +24,14 @@ export default function App() {
 
             {isAuthenticated ? (
               <>
-                <Route path='/dashboard' element={<><Header/> <Dashboard/></>}/>
+                <Route path='/dashboard' element={<><Header/> <Dashboard/></>}>
+                  <Route index element={<ShowUser />} />
+                  <Route path='add_user' element={<AddUser/>}/>
+                  <Route path='show_users' element={<ShowUser/>}/>
+                  <Route path='update_user' element={<UpdateUser/>}/>
+                  <Route path='delete_user' element={<DeleteUser/>}/>
+                </Route>
+
                 <Route path='*' element={<><Header/> <Navigate to='/dashboard'/></>}/>
               </>
               ) : (

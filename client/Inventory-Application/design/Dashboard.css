@@ -38,10 +38,14 @@
 
 .d-Nav-Item{
     margin: 20px 0;
-    color: white;
     cursor: pointer;
     font-family: sans-serif;
     font-weight: bold;
+}
+
+.d-Link-Item{
+    text-decoration: none;
+    color: white;
 }
 
 .d-Nav-Item:hover{  
