@@ -11,11 +11,16 @@ export default function Dashboard(){
 
     const handleFindUser = async ()=> {
         try{
+            if(!firstName || !lastName){
+                alert("No firstname or lastname was inputted");
+                return;
+            }
+
             const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USER, {
                 params: {firstName, lastName},
                 headers: {"Content-Type": 'Application/json'}
             })
-    
+        
             setUsers([response.data]);
         }catch(error){
             console.error(error);

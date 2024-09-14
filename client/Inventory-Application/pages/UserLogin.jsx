@@ -14,6 +14,11 @@ export default function UserLogin({ setIsAuthenticated }){
         e.preventDefault();
 
         try{
+            if(!userName || !passWord){
+                alert("No username or password was inputted");
+                return;
+            }
+            
             const response = await axios.post(import.meta.env.VITE_APP_SERVER_LOGIN,{
                userName: userName,
                passWord: passWord,

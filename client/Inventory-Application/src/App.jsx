@@ -8,7 +8,7 @@ import './App.css'
 
 export default function App() {
   const[isAuthenticated, setIsAuthenticated] = useState(()=>{
-    return localStorage.getItem('isAuthenticated') === 'true';
+    return localStorage.getItem('isAuthenticated') === 'true'; 
   });
 
   return (
