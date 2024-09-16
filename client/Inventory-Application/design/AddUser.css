@@ -1,0 +1,33 @@
+.d-AddUser-Form-Container{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    padding: 50px;
+}
+
+.d-AddUser-Form-Label{
+    font-family: sans-serif;
+    font-size: 18px;
+    color: white;
+}
+
+.d-AddUser-Form-Control{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.d-AddUser-Form-Button-Container{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.d-AddUser-Form-Button{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}

@@ -7,28 +7,48 @@ export default function AddUser(){
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
     const [userName, setUsername] = useState('');
-    const [currentPassword, setCurrentpassword] = useState('');
-    const [newPassword, setNewpassword] = useState('');
+    const [passWord, setPassword] = useState('');
     const [repeatPassword, setRepeatpassword] = useState('');
 
     const handleAddUser = async ()=> {
         try{
-            if(!firstName || !lastName || !userName || !currentPassword || !newPassword || !repeatPassword)
-            {
+            if(!firstName || !lastName || !userName || !passWord || !repeatPassword){
                 alert("Please Fill-Up the Form completely");
                 return;
             }
 
-            const response = await axios.post(import.meta.env.VITE_APP_SERVER_NEW_USERS, {
-                params: {firstName, lastName, userName, currentPassword, newPassword, repeatPassword},
-                headers : { "Content-Type": 'application/json'}
+            if(passWord.length < 5){
+                alert("The password was too short! Please try again");
+                return;
+            }
+
+            if(passWord !== repeatPassword){
+                alert("The password was mismatch");
+                return;
+            }
+
+            const response = await axios.post(import.meta.env.VITE_APP_SERVER_NEW_USER, {
+                firstName,
+                lastName, 
+                userName, 
+                passWord
+            }, {
+                headers: { 
+                    "Content-Type": 'application/json'
+                }
             })
             
+            if(response.status === 201)
+            {
+                alert("New User was been added");
+            }else{
+                alert("Failed to add user: " + response.data.message); 
+            }
 
         }catch(error){
-            console.error(error);
+            console.error("Error:", error.response ? error.response.data : error.message);
+            alert("An error occurred while adding the user: " + (error.response ? error.response.data.message : error.message));
         }
-        
     }
 
     return(
@@ -58,25 +78,17 @@ export default function AddUser(){
                     className='d-AddUser-Form-Control'
                     onChange={(e)=> setUsername(e.target.value)}/><br/>
             
-                <Form.Label className='d-AddUser-Form-Label'>Current Password</Form.Label>
+                <Form.Label className='d-AddUser-Form-Label'>Password</Form.Label>
                 <Form.Control 
-                    type='text' 
-                    placeholder='Enter current password'
-                    value={currentPassword}
+                    type='password' 
+                    placeholder='Enter password'
+                    value={passWord}
                     className='d-AddUser-Form-Control'
-                    onChange={(e)=> setCurrentpassword(e.target.value)}/><br/>
-
-                <Form.Label className='d-AddUser-Form-Label'>New Password</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter new password'
-                    value={newPassword}
-                    className='d-AddUser-Form-Control'
-                    onChange={(e)=> setNewpassword(e.target.value)}/><br/>
+                    onChange={(e)=> setPassword(e.target.value)}/><br/>
 
                 <Form.Label className='d-AddUser-Form-Label'>Repeat Password</Form.Label>
                 <Form.Control 
-                    type='text' 
+                    type='password' 
                     placeholder='Enter repeat password'
                     value={repeatPassword}
                     className='d-AddUser-Form-Control'

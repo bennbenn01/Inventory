@@ -125,17 +125,21 @@ app.get('/find_users', async (req, res)=> {
 });
 
 app.post('/new_user', async (req, res)=>{
-    try{
-        const result = await User.save();
-
-        if(result.status === 200){
-            res.status(201).json({message: 'User created successfully'});
-        }else{
-            return res.status(404).json({message: 'User was not found'});
+    const { firstName, lastName, userName, passWord } = req.body;
+    
+    try{    
+        const existUser = await User.findOne({userName});
+        if(existUser){
+            return res.status(400).json({message: 'User already exits'});
         }
+
+        const newUser = new User({firstName, lastName, userName, passWord});    
+        await newUser.save();
+
+        res.status(201).json({message: 'User was created successfully'});
     }catch(error){
         console.error(error);
-        res.status(404).json({message: 'Error on Saving Information of User'});
+        res.status(500).json({message: 'Error on Saving Information of User'});
     }
 });
 
