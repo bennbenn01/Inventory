@@ -8,7 +8,9 @@ export default function ShowUser(){
     const [lastName, setLastname] = useState('');
     const [users, setUsers] = useState([]);
 
-    const handleFindUser = async ()=> {
+    const handleFindUser = async (e)=> {
+        e.preventDefault();
+
         try{
             if(!firstName || !lastName){
                 alert("No firstname or lastname was inputted");
@@ -26,18 +28,23 @@ export default function ShowUser(){
         }
     }
 
-    const handleFindUsers = async ()=> {
+    const handleFindUsers = async (e)=> {
+        e.preventDefault();
+        
         const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USERS, {
             headers: {
                 "Content-Type": 'application/json'
             }
         })
+        setFirstname('');
+        setLastname('');
         setUsers(response.data);
     }
 
     return(
         <>
             <Form className='d-ShowUser-Form-Container'>
+                <h1 className='d-ShowUser-Form-Title'>Show Users</h1>
                 <Form.Label className='d-ShowUser-Form-Label'>First Name</Form.Label>
                 <Form.Control 
                     type='text' 
@@ -68,6 +75,7 @@ export default function ShowUser(){
             </Form>
 
             <Container className='d-ShowUser-Table-Container'>
+                <h1 className='d-ShowUser-Form-Title'>List of Users</h1>
                 <Table striped bordered className='d-ShowUser-Table-Main-Container'>
                     <thead className='d-ShowUser-THead-Container'>
                         <tr>

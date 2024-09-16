@@ -40,7 +40,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 5;
+    z-index: 10;
     background-color: rgb(36, 36, 36);
     padding: 10px 0;
     border-radius: 20px;

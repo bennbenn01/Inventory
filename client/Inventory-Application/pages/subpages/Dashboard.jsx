@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Navbar, Nav } from "react-bootstrap"
 import { Link, Outlet } from 'react-router-dom'
-import Cookies from 'js-cookie'
 import '../../design/Dashboard.css' 
 
 export default function Dashboard(){
@@ -10,7 +9,7 @@ export default function Dashboard(){
     useEffect(()=> {
         async function fetchUser() {
             try{
-                const storageUsername = Cookies.get('userName');
+                const storageUsername = localStorage.getItem('userName');
                 if(storageUsername){
                     setUsername(storageUsername);
                 }else{

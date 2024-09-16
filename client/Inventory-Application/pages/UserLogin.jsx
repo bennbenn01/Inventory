@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { useUser } from '../reusing_Context/UserContext.jsx'
 import '../design/UserLogin.css'
 import axios from 'axios'
-import Cookies from 'js-cookie' 
 
 export default function UserLogin({ setIsAuthenticated }){
     const{userName, setUsername} = useUser();
@@ -19,7 +18,12 @@ export default function UserLogin({ setIsAuthenticated }){
                 alert("No username or password was inputted");
                 return;
             }
-            
+
+            if(!userName || !userName.passWord === passWord){
+                alert("The username or password was incorrect! Please try again!");
+                return;
+            }
+
             const response = await axios.post(import.meta.env.VITE_APP_SERVER_LOGIN,{
                userName: userName,
                passWord: passWord,
@@ -32,14 +36,18 @@ export default function UserLogin({ setIsAuthenticated }){
             if(response.status === 200){
                 setIsAuthenticated(true);
                 localStorage.setItem('isAuthenticated', 'true');
-                Cookies.set('userName', response.data.userName);
+                localStorage.setItem('userName', response.data.userName);
                 setUsername(response.data.userName);
                 navigate('/dashboard');
-            }else{
-                console.error('Login failed');
             }
         }catch(error){
-            console.error(error);
+            if(error.response){
+                alert("Login failed. Please try again!");
+                return;
+            }else{
+                alert(`Error: ${error.response.data.message || 'Login failed'}`);
+                return;
+            }
         }
     }
 
@@ -56,12 +64,12 @@ export default function UserLogin({ setIsAuthenticated }){
                         <hr/>
 
                         <Form.Group>
-                            <Form.Label className='ul-Label'>Email or Username</Form.Label><br/>
+                            <Form.Label className='ul-Label'>Username</Form.Label><br/>
                             <Form.Control 
                                 type='text'
                                 className='ul-Control' 
                                 value={userName}
-                                placeholder='Enter email or username'
+                                placeholder='Enter username'
                                 onChange={(e)=>{setUsername(e.target.value)}}/>
                         </Form.Group>
 

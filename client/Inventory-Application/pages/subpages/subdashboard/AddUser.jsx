@@ -10,7 +10,9 @@ export default function AddUser(){
     const [passWord, setPassword] = useState('');
     const [repeatPassword, setRepeatpassword] = useState('');
 
-    const handleAddUser = async ()=> {
+    const handleAddUser = async (e)=> {
+        e.preventDefault();
+
         try{
             if(!firstName || !lastName || !userName || !passWord || !repeatPassword){
                 alert("Please Fill-Up the Form completely");
@@ -41,6 +43,11 @@ export default function AddUser(){
             if(response.status === 201)
             {
                 alert("New User was been added");
+                setFirstname('');
+                setLastname('');
+                setUsername('');
+                setPassword('');
+                setRepeatpassword('');
             }else{
                 alert("Failed to add user: " + response.data.message); 
             }
@@ -54,6 +61,7 @@ export default function AddUser(){
     return(
         <>
             <Form className='d-AddUser-Form-Container'>
+                <h1 className='d-AddUser-Form-Title'>Add User</h1>
                 <Form.Label className='d-AddUser-Form-Label'>First Name</Form.Label>
                 <Form.Control 
                     type='text' 
