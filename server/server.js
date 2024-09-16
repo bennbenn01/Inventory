@@ -53,7 +53,7 @@ app.post('/login', async (req, res)=> {
             console.log("Logs was been updated");
         }
 
-        res.json({message: 'Login Successful'});
+        res.json({message: 'Login Successful', userName});
 
     }catch(error){
         console.error(error);

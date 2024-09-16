@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap'
 import { useUser } from '../../reusing_Context/UserContext.jsx'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import '../../design/Header.css'
 
 export default function Header(){
@@ -27,6 +28,7 @@ export default function Header(){
 
             if(response.status === 200){
                 localStorage.removeItem('isAuthenticated');
+                Cookies.remove('userName');
                 navigate('/login');
             }
         }catch(error){

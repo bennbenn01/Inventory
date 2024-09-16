@@ -19,7 +19,8 @@
 }
 
 .d-Navbar-Container{
-    margin: 100px 20px;
+    text-align: center;
+    margin: 100px 50px;
 }
 
 .d-Navbar-Brand{
@@ -44,6 +45,7 @@
 }
 
 .d-Link-Item{
+    white-space: nowrap;
     text-decoration: none;
     color: white;
 }

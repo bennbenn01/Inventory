@@ -1,15 +1,34 @@
+import { useState, useEffect } from "react";
 import { Container, Navbar, Nav } from "react-bootstrap"
 import { Link, Outlet } from 'react-router-dom'
+import Cookies from 'js-cookie'
 import '../../design/Dashboard.css' 
 
 export default function Dashboard(){
+    const [userName, setUsername] = useState('');
+
+    useEffect(()=> {
+        async function fetchUser() {
+            try{
+                const storageUsername = Cookies.get('userName');
+                if(storageUsername){
+                    setUsername(storageUsername);
+                }else{
+                    console.error("No user was logged in");
+                }
+            }catch(error){
+                console.error("Failed to fetch user: " + error);
+            }
+        }
+        fetchUser();
+    }, [])
 
     return(
         <>
             <Container className='d-Container'>
                 <Container className="box d-Box-Container-1">
                     <Navbar className='d-Navbar-Container'>
-                        <Navbar.Brand className='d-Navbar-Brand'>Username</Navbar.Brand>
+                        <Navbar.Brand className='d-Navbar-Brand'>{userName}</Navbar.Brand>
                         <Nav className='d-Nav-Container'>
                             <Nav.Item className='d-Nav-Item'>
                                 <Link className='d-Link-Item' to='add_user'>Add User</Link>

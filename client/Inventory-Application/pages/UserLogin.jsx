@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useUser } from '../reusing_Context/UserContext.jsx'
 import '../design/UserLogin.css'
 import axios from 'axios'
+import Cookies from 'js-cookie' 
 
 export default function UserLogin({ setIsAuthenticated }){
     const{userName, setUsername} = useUser();
@@ -31,6 +32,8 @@ export default function UserLogin({ setIsAuthenticated }){
             if(response.status === 200){
                 setIsAuthenticated(true);
                 localStorage.setItem('isAuthenticated', 'true');
+                Cookies.set('userName', response.data.userName);
+                setUsername(response.data.userName);
                 navigate('/dashboard');
             }else{
                 console.error('Login failed');
