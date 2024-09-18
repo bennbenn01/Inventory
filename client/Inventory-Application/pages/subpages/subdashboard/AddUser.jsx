@@ -15,7 +15,7 @@ export default function AddUser(){
 
         try{
             if(!firstName || !lastName || !userName || !passWord || !repeatPassword){
-                alert("Please Fill-Up the Form completely");
+                alert("Please Fill-Up the Form");
                 return;
             }
 
@@ -85,7 +85,7 @@ export default function AddUser(){
                     value={userName}
                     className='d-AddUser-Form-Control'
                     onChange={(e)=> setUsername(e.target.value)}/><br/>
-            
+
                 <Form.Label className='d-AddUser-Form-Label'>Password</Form.Label>
                 <Form.Control 
                     type='password' 

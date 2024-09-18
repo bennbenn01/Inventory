@@ -88,13 +88,12 @@ app.post('/logout', (req, res)=>{
 });
 
 app.get('/find_user', async (req, res)=> {
-    const {firstName, lastName, userName} = req.query;
+    const {firstName, lastName} = req.query;
 
     try{
         const query = {};
         if(firstName) query.firstName = firstName;
         if(lastName) query.lastName = lastName;
-        if(userName) query.userName = userName;
 
         const result = await User.findOne(query);   
 
@@ -143,13 +142,18 @@ app.post('/new_user', async (req, res)=>{
     }
 });
 
-app.put('/update_user/:id', async (req, res)=> {
+app.put('/update_user', async (req, res)=> {
+    const {firstName, lastName} = req.query;
+
     try{
-        const userId = req.params.id;
-        const result = await User.updateOne(userId);
+        const query = {};
+        if (firstName) query.firstName = firstName;
+        if (lastName) query.lastName = lastName;
+
+        const result = await User.updateOne(query);
 
         if(result){
-            res.status(200).json({mesage: 'User updated successfully'});
+            res.status(202).json({mesage: 'User updated successfully'});
         }else{
             return res.status(404).json({message: 'User was not found'});
         }
@@ -159,13 +163,18 @@ app.put('/update_user/:id', async (req, res)=> {
     }
 });
 
-app.delete('/delete_user/:id', async (req, res)=> {
+app.delete('/delete_user', async (req, res)=> {
+    const{firstName, lastName} = req.query;
+
     try{
-        const userId = req.params.id;
-        const result = await User.findByIdAndDelete(userId);
+        const query = {};
+        if(firstName) query.firstName = firstName;
+        if(lastName) query.lastName = lastName;
+
+        const result = await User.deleteOne(query);
 
         if(result){
-            res.status(202).json({message: 'User deleted successfully'});
+            res.status(200).json({message: 'User deleted successfully'});
         }else{
             return res.status(404).json({message: 'User was not found'});
         }
@@ -173,10 +182,6 @@ app.delete('/delete_user/:id', async (req, res)=> {
         console.error(error);
         res.status(404).json({message: 'Error on Deleting Information of User'});
     }
-});
-
-app.get('/error', (req, res)=> {
-    res.send('404 Error');
 });
 
 app.listen(PORT, ()=>{
