@@ -9,12 +9,18 @@ export default function UpdateUser(){
     const [userName, setUsername] = useState('');
     const [passWord, setPassword] = useState('');
     const [repeatPassword, setRepeatpassword] = useState('');
+    const [address, setAddress] = useState({ street: '', city: '', country: '', province: '', zip: ''});
+    const [age, setAge] = useState('');
+    const [position, setPosition] = useState('');
+    const [startedDate, setStarteddate] = useState('');
 
     const handleUpdateUser = async (e)=> {
         e.preventDefault();
 
         try{
-            if(!firstName || !lastName || !userName || !passWord || !repeatPassword){
+            if(!firstName || !lastName || !userName || !passWord || !repeatPassword ||
+                !address.street || !address.city || !address.country || !address.province || 
+                !address.zip || !age || !position || !startedDate){
                 alert("Please Fill-Up the Form");
                 return;
             }
@@ -30,21 +36,33 @@ export default function UpdateUser(){
             }
     
             const response = await axios.put(import.meta.env.VITE_APP_SERVER_UPDATE_USER, {
-                params: {firstName, lastName, userName, passWord},
-                headers: {"Content-Type": 'application/json'}
-            })
+                    firstName, 
+                    lastName, 
+                    userName, 
+                    passWord, 
+                    address,
+                    age: Number(age), 
+                    position,
+                    startedDate
+                }, {
+                    headers: {"Content-Type": 'application/json'}
+                })
     
-            if(response.status === 200){
+            if(response.status >= 200 && response.status < 300){
                 alert("The User's information was updated");
                 setFirstname('');
                 setLastname('');
                 setPassword('');
                 setRepeatpassword('');
+                setAddress({ street: '', city: '', country: '', province: '', zip: '' });
+                setAge('');
+                setPosition('');
+                setStarteddate('');
             }else{
                 alert("Failed to update the user's information: " + response.data.message);
             }
         }catch(error){
-            console.error(error);
+            console.error("Error occurred while updating user: " + error.response ? error.response.data : error.message);
         }
     }
 
@@ -92,11 +110,76 @@ export default function UpdateUser(){
                     className='d-UpdateUser-Form-Control'
                     onChange={(e)=> setRepeatpassword(e.target.value)}/><br/>
 
+                <Form.Label className='d-UpdateUser-Form-Label'>Address</Form.Label>
+
+                <Form.Label className='d-UpdateUser-Form-Label'>Street</Form.Label>
+                <Form.Control 
+                    type='text' 
+                    placeholder='Enter street'
+                    value={address.street}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setAddress({...address, street: e.target.value})}/>
+
+                <Form.Label className='d-UpdateUser-Form-Label'>City</Form.Label>
+                <Form.Control 
+                    type='text' 
+                    placeholder='Enter city'
+                    value={address.city}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setAddress({...address, city: e.target.value})}/><br/>
+                
+                <Form.Label className='d-UpdateUser-Form-Label'>Country</Form.Label>
+                <Form.Control 
+                    type='text' 
+                    placeholder='Enter country'
+                    value={address.country}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setAddress({...address, country: e.target.value})}/>
+
+                <Form.Label className='d-UpdateUser-Form-Label'>Province</Form.Label>
+                <Form.Control 
+                    type='text' 
+                    placeholder='Enter province'
+                    value={address.province}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setAddress({...address, province: e.target.value})}/><br/>
+
+                <Form.Label className='d-UpdateUser-Form-Label'>Zip</Form.Label>
+                <Form.Control 
+                    type='text' 
+                    placeholder='Enter zip'
+                    value={address.zip}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setAddress({...address, zip: e.target.value})}/>
+
+                <Form.Label className='d-UpdateUser-Form-Label'>Age</Form.Label>
+                <Form.Control 
+                    type='number' 
+                    placeholder='Enter age'
+                    value={age}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setAge(e.target.value)}/><br/>
+
+                <Form.Label className='d-UpdateUser-Form-Label'>Position</Form.Label>
+                <Form.Control 
+                    type='text' 
+                    placeholder='Enter position'
+                    value={position}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setPosition(e.target.value)}/>
+
+                <Form.Label className='d-UpdateUser-Form-Label'>Started Date of Account</Form.Label>
+                <Form.Control 
+                    type='date'
+                    value={startedDate}
+                    className='d-UpdateUser-Form-Control'
+                    onChange={(e)=> setStarteddate(e.target.value)}/>
+
                 <Container className='d-UpdateUser-Form-Button-Container'>
                     <Button 
                         className='d-UpdateUser-Form-Button'
                         onClick={handleUpdateUser}
-                        >Update User</Button>
+                    >Update User</Button>
                 </Container>
             </Form>
         </>

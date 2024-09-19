@@ -1,9 +1,10 @@
+/*
 .d-AddUser-Form-Container{
     display: flex;
     flex-direction: column;
     background-color: rgb(40, 40, 40);
     border-radius: 20px;
-    padding: 10px 50px;
+    padding: 20px 50px;
 }
 
 .d-AddUser-Form-Title{
@@ -28,10 +29,9 @@
 }
 
 .d-AddUser-Form-Button-Container{
-    display: inline-flex;
+    display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 10px;
+    margin-top: 10px;
 }
 
 .d-AddUser-Form-Button{
@@ -45,3 +45,4 @@
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
 }
+*/

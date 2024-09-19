@@ -143,23 +143,46 @@ app.post('/new_user', async (req, res)=>{
 });
 
 app.put('/update_user', async (req, res)=> {
-    const {firstName, lastName} = req.query;
+    const {firstName, lastName, userName, passWord, address, age, position, startedDate} = req.body;
+
+    if (!userName) {
+        return res.status(400).json({ message: 'Username is required' });
+    }
 
     try{
-        const query = {};
-        if (firstName) query.firstName = firstName;
-        if (lastName) query.lastName = lastName;
+        const query = { userName };
 
-        const result = await User.updateOne(query);
+        const update = {};
+            if (firstName) update.firstName = firstName;
+            if (lastName) update.lastName = lastName;
+            if (passWord) update.passWord = passWord;
+            if (address) update.address = address;
+            if (age) update.age = age;
+            if (position) update.position = position;
 
-        if(result){
-            res.status(202).json({mesage: 'User updated successfully'});
+            if (startedDate) {
+                const parsedDate = new Date(startedDate);
+                if (isNaN(parsedDate)) {
+                    return res.status(400).json({ message: 'Invalid started date' });
+                }
+                const formattedDate = parsedDate.toISOString().split('T')[0];
+                update.startedDate = formattedDate;
+            }
+        
+        const result = await User.updateOne(query, {$set: update});
+
+        if(result.matchedCount > 0){
+            if(result.matchedCount > 0){
+                res.status(200).json({message: 'User updated successfully'});
+            }else{
+                res.status(200).json({message: 'User exists but no changes were made'});
+            }
         }else{
-            return res.status(404).json({message: 'User was not found'});
+            res.status(404).json({message: 'User was not found'});
         }
     }catch(error){
         console.error(error);
-        res.status(404).json({message: 'Error on Updating Information of User'});
+        res.status(500).json({message: 'Server Error'});
     }
 });
 
@@ -176,7 +199,7 @@ app.delete('/delete_user', async (req, res)=> {
         if(result){
             res.status(200).json({message: 'User deleted successfully'});
         }else{
-            return res.status(404).json({message: 'User was not found'});
+            res.status(404).json({message: 'User was not found'});
         }
     }catch(error){
         console.error(error);
