@@ -38,11 +38,17 @@
 .d-DeleteUser-Form-Button{
     border: none;
     border-radius: 10px;
-    padding: 10px;
+    padding: 12px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .d-DeleteUser-Form-Button:hover{
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
+}
+
+.d-DeleteUser-Form-Button:not(:hover){
+    transition: 1s ease;
+    background-color: white;
 }

@@ -7,6 +7,8 @@ export default function ShowUser(){
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
     const [users, setUsers] = useState([]);
+    const [position, setPosition] = useState('');
+    const [startedDate, setStarteddate] = useState('');
 
     const handleFindUser = async (e)=> {
         e.preventDefault();
@@ -83,12 +85,14 @@ export default function ShowUser(){
                             <th className='d-ShowUser-TH-Row'>First Name</th>
                             <th className='d-ShowUser-TH-Row'>Last Name</th>
                             <th className='d-ShowUser-TH-Row'>User Name</th>
+                            <th className='d-ShowUser-TH-Row'>Position</th>
+                            <th className='d-ShowUser-TH-Row'>Started Date</th>
                         </tr>
                     </thead>
                     <tbody className='d-ShowUser-TBody-Container'>
                     {users.length === 0 ? (
                         <tr>
-                            <td colSpan={4} className='d-ShowUser-TD-Colspan'>No Users Found</td>
+                            <td colSpan={6} className='d-ShowUser-TD-Colspan'>No Users Found</td>
                         </tr>
                     ) : (
                         users.map((user, i)=> (
@@ -97,6 +101,8 @@ export default function ShowUser(){
                             <td className='d-ShowUser-TD-Row'>{user.firstName || 'N/A'}</td>
                             <td className='d-ShowUser-TD-Row'>{user.lastName || 'N/A'}</td>
                             <td className='d-ShowUser-TD-Row'>{user.userName || 'N/A'}</td>
+                            <td className='d-ShowUser-TD-Row'>{user.position || 'N/A'}</td>
+                            <td className='d-ShowUser-TD-Row'>{user.startedDate || 'N/A'}</td>
                         </tr>
                         ))
                     )}

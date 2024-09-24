@@ -14,6 +14,11 @@ export default function Header(){
         setShowDropdown(prev => !prev)
     }
 
+    const handleSettings = async (e)=> {
+        e?.preventDefault();
+
+    }
+
     const handleLogOut = async (e)=> {
         e?.preventDefault();
 
@@ -65,7 +70,12 @@ export default function Header(){
 
                         {showDropdown && (
                             <Dropdown.Menu className='header-Dropdown-Menu'>
-                                <Dropdown.Item className='header-Dropdown-Menu-Item'>Settings</Dropdown.Item>
+                                <Dropdown.Item 
+                                    className='header-Dropdown-Menu-Item'
+                                    onClick={()=> {
+                                        setShowDropdown(false);
+                                        handleSettings();
+                                    }}>Settings</Dropdown.Item>
                                 <Dropdown.Item 
                                     className='header-Dropdown-Menu-Item'
                                     onClick={()=> {

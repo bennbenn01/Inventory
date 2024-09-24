@@ -159,15 +159,7 @@ app.put('/update_user', async (req, res)=> {
             if (address) update.address = address;
             if (age) update.age = age;
             if (position) update.position = position;
-
-            if (startedDate) {
-                const parsedDate = new Date(startedDate);
-                if (isNaN(parsedDate)) {
-                    return res.status(400).json({ message: 'Invalid started date' });
-                }
-                const formattedDate = parsedDate.toISOString().split('T')[0];
-                update.startedDate = formattedDate;
-            }
+            if (startedDate) update.startedDate = startedDate;
         
         const result = await User.updateOne(query, {$set: update});
 

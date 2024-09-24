@@ -12,9 +12,9 @@ const userSchema = new mongoose.Schema({
         province: { type: String, required: true },
         zip: { type: String, required: true },
     },
-    age: { type: Number, required: true, min: 0, max: 120 },
+    age: { type: Number, required: true, min: 1, max: 120 },
     position: { type: String, required: true },
-    startedDate: { type: Date, required: true  }
+    startedDate: { type: String, required: true }
 });
 
 const User =  mongoose.model('User', userSchema);
