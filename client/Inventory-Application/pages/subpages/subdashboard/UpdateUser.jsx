@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Container, Form, Button } from 'react-bootstrap'
+import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import '../../../design/UpdateUser.css'
 import axios from 'axios'
 
@@ -52,6 +52,7 @@ export default function UpdateUser(){
                 alert("The User's information was updated");
                 setFirstname('');
                 setLastname('');
+                setUsername('');
                 setPassword('');
                 setRepeatpassword('');
                 setAddress({ street: '', city: '', country: '', province: '', zip: '' });
@@ -69,102 +70,142 @@ export default function UpdateUser(){
     return(
         <>
             <Form>
-                <h1>Update User</h1>                
+                <h1 className='d-UpdateUser-Form-Title'>Update User</h1>                
                 
-                <Form.Label>First Name</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter first name'
-                    value={firstName}
-                    onChange={(e)=> setFirstname(e.target.value)}/><br/>
+                <Container>
+                    <Row className='d-UpdateUser-Form-Row-Container-1'>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-1'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>First Name</Form.Label>
+                        </Col>
 
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter last name'
-                    value={lastName}
-                    onChange={(e)=> setLastname(e.target.value)}/><br/>
+                        <Col>
+                            <Form.Control 
+                                type='text' 
+                                placeholder='Enter first name'
+                                value={firstName}
+                                className='d-UpdateUser-Form-Control-Sub-Col-1'
+                                onChange={(e)=> setFirstname(e.target.value)}/><br/>
+                        </Col>
 
-                <Form.Label>Username</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter username'
-                    value={userName}
-                    onChange={(e)=> setUsername(e.target.value)}/><br/>
+                        <Col>
+                            <Form.Label>Last Name</Form.Label>
+                        </Col>
 
-                <Form.Label>Password</Form.Label>
-                <Form.Control 
-                    type='password' 
-                    placeholder='Enter password'
-                    value={passWord}
-                    onChange={(e)=> setPassword(e.target.value)}/><br/>
+                        <Col>
+                            <Form.Control 
+                                type='text' 
+                                placeholder='Enter last name'
+                                value={lastName}
+                                onChange={(e)=> setLastname(e.target.value)}/><br/>
+                        </Col>
 
-                <Form.Label>Repeat Password</Form.Label>
-                <Form.Control 
-                    type='password' 
-                    placeholder='Enter repeat password'
-                    value={repeatPassword}
-                    onChange={(e)=> setRepeatpassword(e.target.value)}/><br/><br/>
+                        <Col>
+                            <Form.Label>Username</Form.Label>
+                        </Col>
+
+                        <Col>
+                            <Form.Control 
+                                type='text' 
+                                placeholder='Enter username'
+                                value={userName}
+                                onChange={(e)=> setUsername(e.target.value)}/><br/>
+                        </Col>
+
+                        <Col>
+                            <Form.Label>Password</Form.Label>
+                        </Col>
+                            
+                        <Col>
+                            <Form.Control 
+                                type='password' 
+                                placeholder='Enter password'
+                                value={passWord}
+                                onChange={(e)=> setPassword(e.target.value)}/><br/>
+                        </Col>
+
+                        <Col>
+                            <Form.Label>Repeat Password</Form.Label>
+                        </Col>
+                        
+                        <Col>
+                            <Form.Control 
+                                type='password' 
+                                placeholder='Enter repeat password'
+                                value={repeatPassword}
+                                onChange={(e)=> setRepeatpassword(e.target.value)}/><br/>
+                        </Col>
+                    </Row>
+                </Container>
 
                 <hr/>
 
-                <h1>Address</h1>
+                <h1 className='d-UpdateUser-Form-Title'>Address</h1>
 
-                <Form.Label>Street</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter street'
-                    value={address.street}
-                    onChange={(e)=> setAddress({...address, street: e.target.value})}/>
+                <Container>
+                    <Row>
+                        <Form.Label>Street</Form.Label>
+                        <Form.Control 
+                            type='text' 
+                            placeholder='Enter street'
+                            value={address.street}
+                            onChange={(e)=> setAddress({...address, street: e.target.value})}/>
 
-                <Form.Label>City</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter city'
-                    value={address.city}
-                    onChange={(e)=> setAddress({...address, city: e.target.value})}/>
+                        <Form.Label>City</Form.Label>
+                        <Form.Control 
+                            type='text' 
+                            placeholder='Enter city'
+                            value={address.city}
+                            onChange={(e)=> setAddress({...address, city: e.target.value})}/>
+                    </Row>
 
-                <Form.Label>Country</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter country'
-                    value={address.country}
-                    onChange={(e)=> setAddress({...address, country: e.target.value})}/>
+                    <Row>
+                        <Form.Label>Country</Form.Label>
+                        <Form.Control 
+                            type='text' 
+                            placeholder='Enter country'
+                            value={address.country}
+                            onChange={(e)=> setAddress({...address, country: e.target.value})}/>
 
-                <Form.Label>Province</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter province'
-                    value={address.province}
-                    onChange={(e)=> setAddress({...address, province: e.target.value})}/>
+                        <Form.Label>Province</Form.Label>
+                        <Form.Control 
+                            type='text' 
+                            placeholder='Enter province'
+                            value={address.province}
+                            onChange={(e)=> setAddress({...address, province: e.target.value})}/>
+                    </Row>
 
-                <Form.Label>Zip</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter zip'
-                    value={address.zip}
-                    onChange={(e)=> setAddress({...address, zip: e.target.value})}/>
+                    <Row>
+                        <Form.Label>Zip</Form.Label>
+                        <Form.Control 
+                            type='text' 
+                            placeholder='Enter zip'
+                            value={address.zip}
+                            onChange={(e)=> setAddress({...address, zip: e.target.value})}/>
 
-                <Form.Label>Age</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter age'
-                    value={age}
-                    onChange={(e)=> setAge(e.target.value)}/>
+                        <Form.Label>Age</Form.Label>
+                        <Form.Control 
+                            type='text' 
+                            placeholder='Enter age'
+                            value={age}
+                            onChange={(e)=> setAge(e.target.value)}/>
+                    </Row>
 
-                <Form.Label>Position</Form.Label>
-                <Form.Control 
-                    type='text' 
-                    placeholder='Enter position'
-                    value={position}
-                    onChange={(e)=> setPosition(e.target.value)}/>
+                    <Row>
+                        <Form.Label>Position</Form.Label>
+                        <Form.Control 
+                            type='text' 
+                            placeholder='Enter position'
+                            value={position}
+                            onChange={(e)=> setPosition(e.target.value)}/>
 
-                <Form.Label>Started Date of Account</Form.Label>
-                <Form.Control 
-                    type='text'
-                    placeholder='Enter Date (ex. mm-dd-yyyy)'
-                    value={startedDate}
-                    onChange={(e)=> setStarteddate(e.target.value)}/>
+                        <Form.Label>Started Date of Account</Form.Label>
+                        <Form.Control 
+                            type='text'
+                            placeholder='Enter Date (ex. mm-dd-yyyy)'
+                            value={startedDate}
+                            onChange={(e)=> setStarteddate(e.target.value)}/>
+                    </Row>
+                </Container>
 
                 <Container>
                     <Button 

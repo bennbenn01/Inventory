@@ -124,7 +124,7 @@ app.get('/find_users', async (req, res)=> {
 });
 
 app.post('/new_user', async (req, res)=>{
-    const { firstName, lastName, userName, passWord } = req.body;
+    const { firstName, lastName, userName, passWord, address, age, position, startedDate} = req.body;
     
     try{    
         const existUser = await User.findOne({userName});
@@ -132,7 +132,7 @@ app.post('/new_user', async (req, res)=>{
             return res.status(400).json({message: 'User already exits'});
         }
 
-        const newUser = new User({firstName, lastName, userName, passWord});    
+        const newUser = new User({firstName, lastName, userName, passWord, address, age, position, startedDate});    
         await newUser.save();
 
         res.status(201).json({message: 'User was created successfully'});
