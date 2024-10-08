@@ -21,10 +21,12 @@ export default function ShowUser(){
 
             const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USER, {
                 params: {firstName, lastName},
-                headers: {"Content-Type": 'Application/json'}
+                headers: {
+                    "Content-Type": 'Application/json'
+                }
             })
         
-            setUsers([response.data]);
+            setUsers(Array.isArray(response.data) ? response.data : [response.data]);
         }catch(error){
             console.error(error);
         }
@@ -33,14 +35,28 @@ export default function ShowUser(){
     const handleFindUsers = async (e)=> {
         e.preventDefault();
         
-        const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USERS, {
-            headers: {
-                "Content-Type": 'application/json'
+        try{
+            const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USERS, {
+                headers: {
+                    "Content-Type": 'Application/json'
+                }
+            })
+
+            console.log("Response data:", response.data);
+
+            setFirstname('');
+            setLastname('');
+            setUsers(Array.isArray(response.data) ? response.data : []);   
+        }catch(error){
+            if (error.response) {
+                console.error("Error response:", error.response.data);
+                console.error("Error status:", error.response.status);
+            } else if (error.request) {
+                console.error("Error request:", error.request);
+            } else {
+                console.error("Error message:", error.message);
             }
-        })
-        setFirstname('');
-        setLastname('');
-        setUsers(response.data);
+        }
     }
 
     return(
@@ -93,7 +109,7 @@ export default function ShowUser(){
                     {users.length === 0 ? (
                         <tr>
                             <td colSpan={6} className='d-ShowUser-TD-Colspan'>No Users Found</td>
-                        </tr>
+                        </tr>       
                     ) : (
                         users.map((user, i)=> (
                         <tr key={i}>

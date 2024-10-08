@@ -1,16 +1,32 @@
 import User from '../Models/User.js'
-import fs from 'fs'
+import fs from 'fs' 
 import { format } from 'date-fns'
 
 const fileSystem = fs;
-const now = Date();
-const formattedDate = format(now, 'HH:mm a MM/dd/yyyy');
 const logsFilePath = './Logs/logs.txt';
 const logsDirPath = './Logs';
 
+const logActivity = (status, userName)=> {
+    const now = Date();
+    const formattedDate = format(now, 'HH:mm a MM/dd/yyyy');
+    const logEntry = `Date: ${formattedDate}\t Status: ${status} \tUser: ${userName} \t\t\n`;
+
+    if(!fileSystem.existsSync(logsDirPath)){
+        fileSystem.mkdirSync(logsDirPath);
+        console.log("Logs Directory was been created");
+    }
+
+    if(!fileSystem.existsSync(logsFilePath)){
+        fileSystem.writeFileSync(logsFilePath, logEntry);
+        console.log("Logs was been created");
+    }else{
+        fileSystem.appendFileSync(logsFilePath, logEntry);
+        console.log("Logs was been updated");
+    }
+};
+
 const loginUser = async (req, res)=> {
     const { userName, passWord } = req.body;
-    const login = `Date: ${formattedDate}\t Status: Log-in \tUser: ${userName} \t\t\n`;
 
     try{
         const user = await User.findOne({ userName });
@@ -19,21 +35,9 @@ const loginUser = async (req, res)=> {
             return res.status(400).json({message: 'Invalid username or password'});
         }
 
-        if(!fileSystem.existsSync(logsDirPath)){
-            fileSystem.mkdirSync(logsDirPath);
-            console.log("Logs Directory was been created");
-        }
-
-        if(!fileSystem.existsSync(logsFilePath)){
-            fileSystem.writeFileSync(logsFilePath, login);
-            console.log("Logs was been created");
-        }else{
-            fileSystem.appendFileSync(logsFilePath, login);
-            console.log("Logs was been updated");
-        }
+        logActivity('Log-in', userName);
 
         res.json({message: 'Login Successful', userName});
-
     }catch(error){
         console.error(error);
         res.status(500).json({message: 'Server Error'});
@@ -42,24 +46,10 @@ const loginUser = async (req, res)=> {
 
 const logoutUser = (req, res)=>{
     const { userName } = req.body;
-    const logout = `Date: ${formattedDate}\t Status: Log-out \tUser: ${userName} \t\t\n`;
 
     try{
-        if(!fileSystem.existsSync(logsDirPath)){
-            fileSystem.mkdirSync(logsDirPath, logout);
-            console.log("Logs Directory was been created");
-        }
-    
-        if(!fileSystem.existsSync(logsFilePath)){
-            fileSystem.writeFileSync(logsFilePath, logout);
-            console.log("Logs was been created");
-        }else{
-            fileSystem.appendFileSync(logsFilePath, logout);
-            console.log("Logs was been updated");
-        }
-
+        logActivity('Log-out', userName);
         res.json({message: 'Logout'});
-
     }catch(error){
         console.error(error);
         res.status(500).json({message: 'Server Error'});

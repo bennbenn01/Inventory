@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap'
 import { useUser } from '../../reusing_Context/UserContext.jsx'
 import axios from 'axios'
@@ -14,9 +14,9 @@ export default function Header(){
         setShowDropdown(prev => !prev)
     }
 
-    const handleSettings = async (e)=> {
+    const handleSettings = (e)=> {
         e?.preventDefault();
-
+        navigate('settings');
     }
 
     const handleLogOut = async (e)=> {
@@ -34,6 +34,7 @@ export default function Header(){
             if(response.status === 200){
                 localStorage.removeItem('isAuthenticated');
                 localStorage.removeItem('userName');
+                localStorage.removeItem('token');
                 navigate('/login');
             }
         }catch(error){
@@ -71,7 +72,9 @@ export default function Header(){
                         {showDropdown && (
                             <Dropdown.Menu className='header-Dropdown-Menu'>
                                 <Dropdown.Item 
+                                    as={Link}
                                     className='header-Dropdown-Menu-Item'
+                                    to='settings'
                                     onClick={()=> {
                                         setShowDropdown(false);
                                         handleSettings();
