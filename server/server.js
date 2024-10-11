@@ -18,6 +18,10 @@ mongoose.connect(process.env.MONGO_API,{
 .then(()=> console.log('MongoDB Connected'))
 .catch(error => console.error(error));
 
+app.get('/', (req, res)=> {
+    res.send("Server is Online");
+});
+
 app.use('/users', users);
 
 app.listen(PORT, ()=> {

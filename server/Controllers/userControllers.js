@@ -1,10 +1,38 @@
 import User from '../Models/User.js'
+import dotenv from 'dotenv'
 import fs from 'fs' 
 import { format } from 'date-fns'
+import crypto from 'crypto'
+import jwt from 'jsonwebtoken'
+
+dotenv.config();
 
 const fileSystem = fs;
 const logsFilePath = './Logs/logs.txt';
 const logsDirPath = './Logs';
+const envFilePath = './.env';
+
+function generatedKey(){
+    return crypto.randomBytes(32).toString('hex')
+}
+
+function updatedToken(token){
+    let envContent = fs.readFileSync(envFilePath, 'utf8');
+    const tokenRegex = /TOKEN=.*\n?/;
+
+    if(tokenRegex.test(envContent)){
+        envContent = envContent.replace(tokenRegex, `TOKEN=${token}\n`)
+    }else{
+        envContent += `TOKEN=${token}\n`;
+    }
+
+    try {
+        fs.writeFileSync(envFilePath, envContent);
+        console.log('Token saved to .env file');
+    } catch (err) {
+        console.error('Error writing to .env file', err);
+    }
+}
 
 const logActivity = (status, userName)=> {
     const now = Date();
@@ -36,8 +64,19 @@ const loginUser = async (req, res)=> {
         }
 
         logActivity('Log-in', userName);
+        
+        let secretKey = process.env.TOKEN;
+        console.log('Secret key from .env:', secretKey);
+        
+        if (!secretKey) {
+            secretKey = generatedKey();
+            updatedToken(secretKey);
+        }
+        
+        const token = jwt.sign({userName: user.userName}, secretKey, {expiresIn: '24h'});
+        console.log('Generated token:', token);
 
-        res.json({message: 'Login Successful', userName});
+        res.json({message: 'Login Successful', userName, token});
     }catch(error){
         console.error(error);
         res.status(500).json({message: 'Server Error'});
@@ -49,7 +88,11 @@ const logoutUser = (req, res)=>{
 
     try{
         logActivity('Log-out', userName);
-        res.json({message: 'Logout'});
+
+        const newToken = generatedKey();
+        updatedToken(newToken);
+
+        res.json({message: 'Logout', newToken});
     }catch(error){
         console.error(error);
         res.status(500).json({message: 'Server Error'});
@@ -82,7 +125,7 @@ const findUsers = async (req, res)=> {
         const result = await User.find();
 
         if(result.length > 0){
-            res.status(200).json(result);
+            return res.status(200).json(result);
         }else{
             return res.status(404).json({message: 'User was not found'});
         }

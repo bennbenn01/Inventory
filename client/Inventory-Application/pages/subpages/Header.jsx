@@ -34,6 +34,7 @@ export default function Header(){
             if(response.status === 200){
                 localStorage.removeItem('isAuthenticated');
                 localStorage.removeItem('userName');
+                localStorage.removeItem('token');
                 navigate('/login');
             }
         }catch(error){

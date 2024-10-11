@@ -35,10 +35,18 @@ export default function ShowUser(){
     const handleFindUsers = async (e)=> {
         e.preventDefault();
         
+        const token = localStorage.getItem('token');
+
+        if(!token){
+            console.log('Token is not defined');
+            return;
+        }
+
         try{
             const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USERS, {
                 headers: {
-                    "Content-Type": 'Application/json'
+                    "Content-Type": 'Application/json',
+                    "authorization": `Bearer ${token}`
                 }
             })
 
