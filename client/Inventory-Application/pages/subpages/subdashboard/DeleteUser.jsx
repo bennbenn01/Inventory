@@ -6,7 +6,8 @@ import axios from 'axios'
 export default function DeleteUser(){
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
-
+    const token = localStorage.getItem('token');
+    
     const handleDeleteUser = async(e)=> {
         e.preventDefault();
 
@@ -18,7 +19,10 @@ export default function DeleteUser(){
     
             const response = await axios.delete(import.meta.env.VITE_APP_SERVER_DELETE_USER, {
                 params: {firstName, lastName},
-                headers: {"Content-Type": 'application/json'}
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Authorization": `Bearer ${token}`
+                }
             })
     
             if(response.status === 200){

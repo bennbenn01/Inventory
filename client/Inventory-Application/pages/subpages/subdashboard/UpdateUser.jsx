@@ -13,6 +13,7 @@ export default function UpdateUser(){
     const [age, setAge] = useState('');
     const [position, setPosition] = useState('');
     const [startedDate, setStarteddate] = useState('');
+    const token = localStorage.getItem('token');
 
     const handleUpdateUser = async (e)=> {
         e.preventDefault();
@@ -45,7 +46,10 @@ export default function UpdateUser(){
                 position,
                 startedDate
             }, {
-                headers: {"Content-Type": 'application/json'}
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Authorization": `Bearer ${token}`
+                }
             })
     
             if(response.status >= 200 && response.status < 300){
@@ -70,7 +74,7 @@ export default function UpdateUser(){
     return(
         <>
             <Form>
-                <h1 className='d-UpdateUser-Form-Title'>Update User</h1>                
+                <h2 className='d-UpdateUser-Form-Title'>Update User</h2>                
                 
                 <Container>
                     <Row className='d-UpdateUser-Form-Row-Container-1'>
@@ -143,7 +147,7 @@ export default function UpdateUser(){
 
                 <hr/>
 
-                <h1 className='d-UpdateUser-Form-Title'>Address</h1>
+                <h2 className='d-UpdateUser-Form-Title'>Address</h2>
 
                 <Container>
                     <Row className='d-UpdateUser-Form-Row-Container-2'>

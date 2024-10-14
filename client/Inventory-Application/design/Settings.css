@@ -1,0 +1,23 @@
+.d-Settings-Container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.d-Settings-Sub-Container{
+    margin: 0 10px;
+}
+
+.d-Settings-Label{
+    font-size: 20px;
+    font-family: sans-serif;
+    margin: 0 5px;
+}
+
+.d-Settings-Button{
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 5px;
+}

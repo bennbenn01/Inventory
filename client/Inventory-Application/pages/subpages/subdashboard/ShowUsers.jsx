@@ -9,6 +9,7 @@ export default function ShowUser(){
     const [users, setUsers] = useState([]);
     const [position, setPosition] = useState('');
     const [startedDate, setStarteddate] = useState('');
+    const token = localStorage.getItem('token');
 
     const handleFindUser = async (e)=> {
         e.preventDefault();
@@ -22,7 +23,8 @@ export default function ShowUser(){
             const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USER, {
                 params: {firstName, lastName},
                 headers: {
-                    "Content-Type": 'Application/json'
+                    "Content-Type": 'Application/json',
+                    "Authorization": `Bearer ${token}`
                 }
             })
         
@@ -34,8 +36,6 @@ export default function ShowUser(){
 
     const handleFindUsers = async (e)=> {
         e.preventDefault();
-        
-        const token = localStorage.getItem('token');
 
         if(!token){
             console.log('Token is not defined');
@@ -46,7 +46,7 @@ export default function ShowUser(){
             const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_USERS, {
                 headers: {
                     "Content-Type": 'Application/json',
-                    "authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${token}`
                 }
             })
 

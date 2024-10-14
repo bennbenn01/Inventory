@@ -59,7 +59,7 @@ export default function Header(){
         <Container className='header-Navbar-Container'>
             <Navbar className='header-Navbar-Box-Container'>
                 <Navbar.Brand className='navbar-Title'>
-                    Inventory
+                    INVENTORY
                 </Navbar.Brand>
                 <Nav>
                     <Dropdown className='header-Dropdown-Container'>

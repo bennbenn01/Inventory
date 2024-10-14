@@ -13,6 +13,7 @@ export default function AddUser(){
     const [age, setAge] = useState('');
     const [position, setPosition] = useState('');
     const [startedDate, setStarteddate] = useState('');
+    const token = localStorage.getItem('token');
 
     const handleAddUser = async (e)=> {
         e.preventDefault();
@@ -46,7 +47,8 @@ export default function AddUser(){
                 startedDate,
             }, {
                 headers: { 
-                    "Content-Type": 'application/json'
+                    "Content-Type": 'application/json',
+                    "Authorization": `Bearer ${token}` 
                 }
             })
             
@@ -74,8 +76,8 @@ export default function AddUser(){
 
     return(
         <>
-            <Form>
-                <h1 className='d-AddUser-Form-Title'>Add User</h1>
+            <Form> 
+                <h2 className='d-AddUser-Form-Title'>Add User</h2>
 
                 <Container>
                     <Row className='d-AddUser-Form-Row-Container-1'>
@@ -148,7 +150,7 @@ export default function AddUser(){
 
                 <hr/>
                 
-                <h1 className='d-AddUser-Form-Title'>Address</h1>
+                <h2 className='d-AddUser-Form-Title'>Address</h2>
 
                 <Container>
                     <Row className='d-AddUser-Form-Row-Container-2'>
