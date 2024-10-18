@@ -9,7 +9,7 @@
 .ul-Box-Container{
     background-color: rgb(56, 56, 56);
     border-radius: 20px;
-    padding: 50px 20px;
+    padding: 50px 25px;
 }
 
 .ul-Title{
@@ -23,14 +23,14 @@
     font-size: 12px;
     font-family: sans-serif;
     font-weight: bold;
-    color: white;
+    color: white; 
 }
 
 .ul-Control{
     border: none;
     margin: 10px 0;
     padding: 10px 40px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .ul-Control:focus{

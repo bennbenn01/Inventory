@@ -24,6 +24,11 @@ export default function UserLogin({ setIsAuthenticated }){
                 return;
             }
 
+            if(!userName || !userName.passWord === passWord){
+                setShowModal1(true);
+                return;
+            }
+
             const response = await axios.post(import.meta.env.VITE_APP_SERVER_LOGIN,{
                userName: userName,
                passWord: passWord,
@@ -44,6 +49,7 @@ export default function UserLogin({ setIsAuthenticated }){
         }catch(error){
             if(error.response){
                 alert("Login failed. Please try again!");
+                setShowModal2(true);
                 return;
             }else{
                 alert(`Error: ${error.response.data.message || 'Login failed'}`);
@@ -59,7 +65,7 @@ export default function UserLogin({ setIsAuthenticated }){
                     <Container className='ul-Box-Container'>
                         
                         <Container className='ul-Container-Title'>
-                            <h1 className='ul-Title'>Inventory</h1>
+                            <h1 className='ul-Title'>INVENTORY</h1>
                         </Container>
 
                         <hr/>
