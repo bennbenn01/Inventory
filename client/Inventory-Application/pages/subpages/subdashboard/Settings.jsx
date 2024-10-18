@@ -6,7 +6,6 @@ export default function Settings({onToggleMode, isDarkMode}) {
     const navigate = useNavigate();
     
     const handleFeedbackOption = ()=> {
-        //TODO: Feedback
         navigate('/dashboard/feedback');
     }
 
