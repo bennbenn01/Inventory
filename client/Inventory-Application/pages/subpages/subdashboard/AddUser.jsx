@@ -128,7 +128,7 @@ export default function AddUser(){
                             <Form.Control 
                                 type='password' 
                                 placeholder='Enter password'
-                                    value={passWord}
+                                value={passWord}
                                 className='d-AddUser-Form-Control-Sub-Col-1'                                    
                                 onChange={(e)=> setPassword(e.target.value)}/><br/>
                         </Col>

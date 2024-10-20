@@ -1,4 +1,5 @@
 import User from '../Models/User.js'
+import userFeedback from '../Models/userFeedback.js'
 import dotenv from 'dotenv'
 import fs from 'fs' 
 import { format } from 'date-fns'
@@ -66,7 +67,6 @@ const loginUser = async (req, res)=> {
         logActivity('Log-in', userName);
         
         let secretKey = process.env.TOKEN;
-        console.log('Secret key from .env:', secretKey);
         
         if (!secretKey) {
             secretKey = generatedKey();
@@ -211,6 +211,27 @@ const deleteUser = async (req, res)=> {
     }
 };
 
+//TODO:Separate the sending of feedback
+
+const sendFeedback = async(req, res)=> {
+    if (!req.user)
+        return res.status(403).json({ message: 'User not authenticated.' });
+
+    const{feedBack} = req.body;
+    
+    console.log('Received feedback:', req.body);
+
+    try{
+        const user = req.user;
+        const newFeedBack = new userFeedback({userName: user.userName, feedBack});
+        await newFeedBack.save();
+        res.status(201).json({message: 'Feedback was created successfully'});    
+    }catch(error){
+        console.error(error);
+        res.status(404).json({message: 'Error on Saving Feedback of User'});
+    }
+}
+
 const userControllers = {
     loginUser,
     logoutUser,
@@ -219,6 +240,7 @@ const userControllers = {
     newUser,
     updateUser,
     deleteUser,
+    sendFeedback,
 }
 
 export default userControllers;

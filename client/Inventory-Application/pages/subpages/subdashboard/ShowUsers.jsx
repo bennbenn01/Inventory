@@ -54,15 +54,10 @@ export default function ShowUser(){
 
             setFirstname('');
             setLastname('');
-            setUsers(Array.isArray(response.data) ? response.data : []);   
+            setUsers(Array.isArray(response.data) ? response.data : []);
         }catch(error){
-            if (error.response) {
-                console.error("Error response:", error.response.data);
-                console.error("Error status:", error.response.status);
-            } else if (error.request) {
-                console.error("Error request:", error.request);
-            } else {
-                console.error("Error message:", error.message);
+            if(error.response = []){
+                alert("No Users Found");
             }
         }
     }

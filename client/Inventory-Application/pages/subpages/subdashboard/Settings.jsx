@@ -11,22 +11,22 @@ export default function Settings({onToggleMode, isDarkMode}) {
 
     return(
         <Form>
-            <Container className='d-Settings-Main-Container'>
-                <h1 className='d-Settings-Title'>Settings</h1>
+            <Container className='d-Settings-Form-Main-Container'>
+                <h1 className='d-Settings-Form-Title'>Settings</h1>
 
-                <Container className='d-Settings-Container'>
+                <Container className='d-Settings-Sub-Container'>
                     
-                    <Form.Label className='d-Settings-Label'>Theme</Form.Label>
+                    <Form.Label className='d-Settings-Form-Label'>Theme</Form.Label>
 
                     <Button
-                        className='d-Settings-Button' 
+                        className='d-Settings-Form-Button' 
                         onClick={onToggleMode}
                     >{isDarkMode ? 'Switch to Dark Mode' : 'Switch to Light Mode'}</Button>
 
-                    <Form.Label className='d-Settings-Label'>Feedback</Form.Label>
+                    <Form.Label className='d-Settings-Form-Label'>Feedback</Form.Label>
 
                     <Button
-                        className='d-Settings-Button'
+                        className='d-Settings-Form-Button'
                         onClick={handleFeedbackOption}
                     >Sumbit Feedback</Button>
                 </Container>

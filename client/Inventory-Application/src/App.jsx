@@ -21,7 +21,8 @@ export default function App() {
   });
 
   useEffect(()=>{
-    document.body.style.backgroundColor = isDarkMode ? 'White' : 'Black';
+    document.body.style.backgroundColor = isDarkMode ? 'rgb(205, 208, 212)' : 'Black';
+    document.body.style.transition = '1s ease';
 
     localStorage.setItem('darkMode', isDarkMode);
   }, [isDarkMode])
