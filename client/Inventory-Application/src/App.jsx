@@ -4,7 +4,9 @@ import { UserProvider } from '../reusing_Context/UserContext.jsx'
 import UserLogin from '../pages/UserLogin.jsx'
 import Header from '../pages/subpages/Header.jsx'
 import Dashboard from '../pages/subpages/Dashboard.jsx'
+import AdminDashboard from '../pages/subpages/AdminDashboard.jsx'
 import ShowUser from '../pages/subpages/subdashboard/ShowUsers.jsx'
+import ShowInfo from '../pages/subpages/subdashboard/ShowInfo.jsx'
 import AddUser from '../pages/subpages/subdashboard/AddUser.jsx'
 import UpdateUser from '../pages/subpages/subdashboard/UpdateUser.jsx'
 import DeleteUser from '../pages/subpages/subdashboard/DeleteUser.jsx'
@@ -15,6 +17,9 @@ import './App.css'
 export default function App() {
   const savedMode = localStorage.getItem('darkMode');
   const [isDarkMode, setIsDarkMode] = useState(savedMode === 'true');
+  const [role, setRole] = useState(()=>{
+    return localStorage.getItem('role');
+  });
 
   const[isAuthenticated, setIsAuthenticated] = useState(()=>{
     return localStorage.getItem('isAuthenticated') === 'true'; 
@@ -36,7 +41,7 @@ export default function App() {
       <UserProvider>
         <Router>
           <Routes>
-            <Route path='/login' element={<UserLogin setIsAuthenticated={setIsAuthenticated}/>}/>
+            <Route path='/login' element={<UserLogin setIsAuthenticated={setIsAuthenticated} setRole={setRole}/>}/>
 
             {isAuthenticated ? (
               <>
@@ -48,14 +53,24 @@ export default function App() {
                   <Route path='delete_user' element={<DeleteUser/>}/>
                   <Route path='settings' element={<Settings onToggleMode={toggleMode} isDarkMode={isDarkMode}/>}/>
                   <Route path='feedback' element={<FeedBack/>}/>
+                
+                  <Route path='*' element={<><Header/> <Navigate to='/dashboard'/></>}/>
                 </Route>
 
-                <Route path='*' element={<><Header/> <Navigate to='/dashboard'/></>}/>
+                {role === 'admin' && (
+                  <Route path='/admin_dashboard' element={<><Header/> <AdminDashboard/></>}>
+                    <Route index element={<ShowInfo/>} />
+                    <Route path='show_info' element={<ShowInfo/>} /> 
+                    <Route path='settings' element={<Settings onToggleMode={toggleMode} isDarkMode={isDarkMode}/>}/>
+                    <Route path='feedback' element={<FeedBack/>}/>
+
+                    <Route path='*' element={<><Header/> <Navigate to='/admin_dashboard'/></>} />
+                  </Route>
+                )}
               </>
               ) : (
                 <Route path='*' element={<Navigate to='/login'/>}/>
-              )
-            }
+            )}
           </Routes>
         </Router>
       </UserProvider>

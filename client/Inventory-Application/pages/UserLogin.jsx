@@ -2,12 +2,16 @@ import { useState } from 'react'
 import { Form, Container, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../reusing_Context/UserContext.jsx'
+import MessageBox from '../customed_messagebox/MessageBox.jsx'
 import '../design/UserLogin.css'
 import axios from 'axios'
 
-export default function UserLogin({ setIsAuthenticated }){
+
+export default function UserLogin({ setIsAuthenticated, setRole }){
     const{userName, setUsername} = useUser();
     const[passWord, setPassword] = useState('');
+    const[showMessage, setShowMessage] = useState(false);
+    const[messageContent, setMessageContent] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e)=> {
@@ -15,17 +19,14 @@ export default function UserLogin({ setIsAuthenticated }){
 
         try{
             if(!userName || !passWord){
-                alert("No username or password was inputted");
+                setMessageContent("No username or password was inputted");
+                setShowMessage(true);
                 return;
             }
 
             if(!userName || !userName.passWord === passWord){
-                alert("The username or password was incorrect! Please try again!");
-                return;
-            }
-
-            if(!userName || !userName.passWord === passWord){
-                setShowModal1(true);
+                setMessageContent("The username or password was incorrect! Please try again!");
+                setShowMessage(true);
                 return;
             }
 
@@ -40,22 +41,27 @@ export default function UserLogin({ setIsAuthenticated }){
 
             if(response.status === 200){
                 setIsAuthenticated(true);
+                setRole(response.data.role);
                 localStorage.setItem('isAuthenticated', 'true');
                 localStorage.setItem('userName', response.data.userName);
                 localStorage.setItem('token', response.data.token);
-                setUsername(response.data.userName);     
-                navigate('/dashboard');
+                localStorage.setItem('role', response.data.role);
+                setUsername(response.data.userName);
+
+                navigate(response.data.role === 'admin' ? '/admin_dashboard' : '/dashboard'); 
             }
         }catch(error){
             if(error.response){
-                alert("Login failed. Please try again!");
-                setShowModal2(true);
-                return;
+                setMessageContent("Login failed. Please try again!");
             }else{
-                alert(`Error: ${error.response.data.message || 'Login failed'}`);
-                return;
+                setMessageContent(`Error: ${error.response.data.message || 'Login failed'}`);
             }
+            setShowMessage(true);
         }
+    }
+
+    const handleCloseMessage = ()=> {
+        setShowMessage(false);
     }
 
     return(
@@ -96,6 +102,14 @@ export default function UserLogin({ setIsAuthenticated }){
                     </Container>
                 </Form>
             </Container>
+
+            {showMessage && (
+                <MessageBox
+                    message={messageContent}
+                    show={showMessage}
+                    onClose={handleCloseMessage}
+                />
+            )}
         </>
     );
 }

@@ -105,13 +105,14 @@ export default function ShowUser(){
                             <th className='d-ShowUser-TH-Row'>Last Name</th>
                             <th className='d-ShowUser-TH-Row'>User Name</th>
                             <th className='d-ShowUser-TH-Row'>Position</th>
+                            <th className='d-ShowUser-TH-Row'>Role</th>
                             <th className='d-ShowUser-TH-Row'>Started Date</th>
                         </tr>
                     </thead>
                     <tbody className='d-ShowUser-TBody-Container'>
                     {users.length === 0 ? (
                         <tr>
-                            <td colSpan={6} className='d-ShowUser-TD-Colspan'>No Users Found</td>
+                            <td colSpan={7} className='d-ShowUser-TD-Colspan'>No Users Found</td>
                         </tr>       
                     ) : (
                         users.map((user, i)=> (
@@ -121,6 +122,7 @@ export default function ShowUser(){
                             <td className='d-ShowUser-TD-Row'>{user.lastName || 'N/A'}</td>
                             <td className='d-ShowUser-TD-Row'>{user.userName || 'N/A'}</td>
                             <td className='d-ShowUser-TD-Row'>{user.position || 'N/A'}</td>
+                            <td className='d-ShowUser-TD-Row'>{user.role || 'N/A'}</td>
                             <td className='d-ShowUser-TD-Row'>{user.startedDate || 'N/A'}</td>
                         </tr>
                         ))

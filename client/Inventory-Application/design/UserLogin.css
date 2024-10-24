@@ -46,10 +46,16 @@
 .ul-Button{
     border: none;
     border-radius: 15px;
-    padding: 10px 50px;
+    font-weight: bold;
+    padding: 10px 30px;
 }
 
 .ul-Button:hover{
     transition: 1s ease;
     background-color: rgb(165, 165, 165);
+}
+
+.ul-Button:not(:hover){
+    transition: 1s ease;
+    background-color: white;
 }

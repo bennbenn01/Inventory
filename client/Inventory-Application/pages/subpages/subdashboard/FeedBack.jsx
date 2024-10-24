@@ -9,9 +9,8 @@ export default function FeedBack(){
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
-        if (storedToken) {
+        if (storedToken) 
             setToken(storedToken);
-        }
     }, []);
 
     const handleFeedbackSubmit = async (e)=> {

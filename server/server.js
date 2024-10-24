@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import users from './routes/api/users.js'
+import errorHandler from './Middlewares/errorHandler.js'
 
 dotenv.config();
 
@@ -24,6 +25,8 @@ app.get('/', (req, res)=> {
 });
 
 app.use('/users', users);
+
+app.use(errorHandler);
 
 app.listen(PORT, ()=> {
     console.log(`The Server is running on http://localhost:${PORT}`);

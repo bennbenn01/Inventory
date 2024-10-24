@@ -4,9 +4,10 @@ import '../../../design/Settings.css'
 
 export default function Settings({onToggleMode, isDarkMode}) {
     const navigate = useNavigate();
-    
+    const role = localStorage.getItem('role');
+
     const handleFeedbackOption = ()=> {
-        navigate('/dashboard/feedback');
+        navigate(role === 'admin' ? '/admin_dashboard/feedback' : '/dashboard/feedback');
     }
 
     return(

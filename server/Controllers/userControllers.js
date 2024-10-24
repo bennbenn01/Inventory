@@ -73,10 +73,11 @@ const loginUser = async (req, res)=> {
             updatedToken(secretKey);
         }
         
-        const token = jwt.sign({userName: user.userName}, secretKey, {expiresIn: '24h'});
+        const role = user.role;
+        const token = jwt.sign({userName: user.userName, role}, secretKey, {expiresIn: '24h'});
         console.log('Generated token:', token);
 
-        res.json({message: 'Login Successful', userName, token});
+        res.json({message: 'Login Successful', userName, token, role});
     }catch(error){
         console.error(error);
         res.status(500).json({message: 'Server Error'});
@@ -164,7 +165,13 @@ const updateUser = async (req, res)=> {
     try{
         const query = { userName };
 
-        const update = {};
+        const user = await User.findOne(query);
+
+        if(user){
+            if(user.role === 'admin')
+                return res.status(403).json({message: 'Cannot update an admin user'});
+
+            const update = {};
             if (firstName) update.firstName = firstName;
             if (lastName) update.lastName = lastName;
             if (passWord) update.passWord = passWord;
@@ -173,13 +180,17 @@ const updateUser = async (req, res)=> {
             if (position) update.position = position;
             if (startedDate) update.startedDate = startedDate;
         
-        const result = await User.updateOne(query, {$set: update});
 
-        if(result.matchedCount > 0){
+            const result = await User.updateOne(query, {$set: update});
+
             if(result.matchedCount > 0){
-                res.status(200).json({message: 'User updated successfully'});
+                if(result.matchedCount > 0){
+                    res.status(200).json({message: 'User updated successfully'});
+                }else{
+                    res.status(200).json({message: 'User exists but no changes were made'});
+                }
             }else{
-                res.status(200).json({message: 'User exists but no changes were made'});
+                res.status(404).json({message: 'User was not found'});
             }
         }else{
             res.status(404).json({message: 'User was not found'});
@@ -198,20 +209,27 @@ const deleteUser = async (req, res)=> {
         if(firstName) query.firstName = firstName;
         if(lastName) query.lastName = lastName;
 
-        const result = await User.deleteOne(query);
+        const user = await User.findOne(query);
 
-        if(result){
-            res.status(200).json({message: 'User deleted successfully'});
+        if(user){
+            if(user.role === 'admin')
+                return res.status(403).json({message: 'Cannot delete an admin user'})
+
+            const result = await User.deleteOne(query);
+
+            if(result.deletedCount > 0){
+                res.status(200).json({message: 'User deleted successfully'});
+            }else{
+                res.status(404).json({message: 'User was not found'});
+            }
         }else{
-            res.status(404).json({message: 'User was not found'});
+            return res.status(404).json({message: 'User was not found'});
         }
     }catch(error){
         console.error(error);
         res.status(404).json({message: 'Error on Deleting Information of User'});
     }
 };
-
-//TODO:Separate the sending of feedback
 
 const sendFeedback = async(req, res)=> {
     if (!req.user)

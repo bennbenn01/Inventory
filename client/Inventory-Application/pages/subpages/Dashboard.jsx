@@ -27,7 +27,8 @@ export default function Dashboard(){
             <Container className='d-Container'>
                 <Container className="box d-Box-Container-1">
                     <Navbar className='d-Navbar-Container'>
-                        <Navbar.Brand className='d-Navbar-Brand'>{userName}</Navbar.Brand>
+                        <Navbar.Brand className='d-Navbar-Brand'>
+                            Username: {userName}</Navbar.Brand>
                         <Nav className='d-Nav-Container'>
                             <Nav.Item className='d-Nav-Item'>
                                 <Link className='d-Link-Item' to='add_user'>Add User</Link>
