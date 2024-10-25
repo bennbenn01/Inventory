@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Container, Table, Form, Button } from 'react-bootstrap'
+import MessageBox from "../../../customed_messagebox/MessageBox.jsx"
 import '../../../design/ShowUsers.css'
 import axios from 'axios'  
 
@@ -10,13 +11,16 @@ export default function ShowUser(){
     const [position, setPosition] = useState('');
     const [startedDate, setStarteddate] = useState('');
     const token = localStorage.getItem('token');
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageContent, setMessageContent] = useState('');
 
     const handleFindUser = async (e)=> {
         e.preventDefault();
 
         try{
             if(!firstName || !lastName){
-                alert("No firstname or lastname was inputted");
+                setMessageContent("No firstname or lastname was inputted");
+                setShowMessage(true);
                 return;
             }
 
@@ -30,7 +34,9 @@ export default function ShowUser(){
         
             setUsers(Array.isArray(response.data) ? response.data : [response.data]);
         }catch(error){
-            console.error(error);
+            console.error(error.response ? error.response.data : error.message);
+            setMessageContent("An error occurred while getting information of the user" + (error.response ? error.response.data.message : error.message));
+            setShowMessage(true);
         }
     }
 
@@ -50,14 +56,13 @@ export default function ShowUser(){
                 }
             })
 
-            console.log("Response data:", response.data);
-
             setFirstname('');
             setLastname('');
             setUsers(Array.isArray(response.data) ? response.data : []);
         }catch(error){
             if(error.response = []){
-                alert("No Users Found");
+                setMessageContent("No Users Found");
+                setShowMessage(true);
             }
         }
     }
@@ -130,6 +135,14 @@ export default function ShowUser(){
                     </tbody>
                 </Table>
             </Container>
+
+            {showMessage && (
+                <MessageBox
+                    message={messageContent}
+                    show={showMessage}
+                    onClose={handleCloseMessage}
+                />
+            )}
         </>
     );
 }

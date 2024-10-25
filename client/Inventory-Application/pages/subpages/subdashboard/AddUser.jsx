@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Container, Form, Button, Col, Row } from 'react-bootstrap'
+import MessageBox from "../../../customed_messagebox/MessageBox.jsx"
 import '../../../design/AddUser.css'
 import axios from 'axios'
 
@@ -13,6 +14,8 @@ export default function AddUser(){
     const [age, setAge] = useState('');
     const [position, setPosition] = useState('');
     const [startedDate, setStarteddate] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageContent, setMessageContent] = useState('');
     const token = localStorage.getItem('token');
 
     const handleAddUser = async (e)=> {
@@ -22,17 +25,20 @@ export default function AddUser(){
             if(!firstName || !lastName || !userName || !passWord || !repeatPassword ||
                 !address.street || !address.city || !address.country || !address.province || 
                 !address.zip || !age || !position || !startedDate){
-                alert("Please Fill-Up the Form");
+                setMessageContent("Please Fill-Up the Form");
+                setShowMessage(true);
                 return;
             }
 
             if(passWord.length < 5){
-                alert("The password was too short! Please try again");
+                setMessageContent("The password was too short! Please try again");
+                setShowMessage(true);
                 return;
             }
 
             if(passWord !== repeatPassword){
-                alert("The password was mismatch");
+                setMessageContent("The password was mismatch");
+                setShowMessage(true);
                 return;
             }
 
@@ -54,7 +60,8 @@ export default function AddUser(){
             
             if(response.status === 201)
             {
-                alert("New User was been added");
+                setMessageContent("New user was been added");
+                setShowMessage(true); 
                 setFirstname('');
                 setLastname('');
                 setUsername('');
@@ -65,13 +72,19 @@ export default function AddUser(){
                 setPosition('');
                 setStarteddate('');
             }else{
-                alert("Failed to add user: " + response.data.message); 
+                setMessageContent("Failed to add user: " + response.data.message);
+                setShowMessage(true); 
             }
-
+            
         }catch(error){
             console.error("Error:", error.response ? error.response.data : error.message);
-            alert("An error occurred while adding the user: " + (error.response ? error.response.data.message : error.message));
+            setMessageContent("An error occurred while adding the user: " + (error.response ? error.response.data.message : error.message));
+            setShowMessage(true);
         }
+    }
+
+    const handleCloseMessage = ()=> {
+        setShowMessage(false);
     }
 
     return(
@@ -273,6 +286,14 @@ export default function AddUser(){
                     >Add User</Button>
                 </Container>
             </Form>
+
+            {showMessage && (
+                <MessageBox
+                    message={messageContent}
+                    show={showMessage}
+                    onClose={handleCloseMessage}
+                />
+            )}
         </>
     );
 }

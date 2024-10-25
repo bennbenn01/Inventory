@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import MessageBox from "../../../customed_messagebox/MessageBox.jsx"
 import '../../../design/UpdateUser.css'
 import axios from 'axios'
 
@@ -13,6 +14,8 @@ export default function UpdateUser(){
     const [age, setAge] = useState('');
     const [position, setPosition] = useState('');
     const [startedDate, setStarteddate] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageContent, setMessageContent] = useState('');
     const token = localStorage.getItem('token');
 
     const handleUpdateUser = async (e)=> {
@@ -22,17 +25,20 @@ export default function UpdateUser(){
             if(!firstName || !lastName || !userName || !passWord || !repeatPassword ||
                 !address.street || !address.city || !address.country || !address.province || 
                 !address.zip || !age || !position || !startedDate){
-                alert("Please Fill-Up the Form");
+                setMessageContent("Please Fill-Up the Form");
+                setShowMessage(true);
                 return;
             }
     
             if(passWord.length < 5){
-                alert("The password was too short! Please try again");
+                setMessageContent("The password was too short! Please try again");
+                setShowMessage(true);
                 return;
             }
     
             if(passWord !== repeatPassword){
-                alert("The password was mismatch");
+                setMessageContent("The password was mismatch");
+                setShowMessage(true);
                 return;
             }
     
@@ -53,7 +59,8 @@ export default function UpdateUser(){
             })
     
             if(response.status >= 200 && response.status < 300){
-                alert("The User's information was updated");
+                setMessageContent("The User's information was updated");
+                setShowMessage(true);
                 setFirstname('');
                 setLastname('');
                 setUsername('');
@@ -64,11 +71,18 @@ export default function UpdateUser(){
                 setPosition('');
                 setStarteddate('');
             }else{
-                alert("Failed to update the user's information: " + response.data.message);
+                setMessageContent("Failed to update the user's information: " + response.data.message);
+                setShowMessage(true);
             }
         }catch(error){
-            console.error("Error occurred while updating user: " + error.response ? error.response.data : error.message);
+            console.error(error.response ? error.response.data : error.message);
+            setMessageContent("An error occurred while updating the user: " + error ? error.response.data.message : error.message);
+            setShowMessage(true);
         }
+    }
+
+    const handleCloseMessage = ()=> {
+        setShowMessage(false);
     }
 
     return(
@@ -118,7 +132,7 @@ export default function UpdateUser(){
                         </Col>
 
                         <Col md={2} className='d-UpdateUser-Form-Col-Container-1'>
-                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>Password</Form.Label>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>Previous Password</Form.Label>
                         </Col>
                             
                         <Col md={2}>
@@ -270,6 +284,14 @@ export default function UpdateUser(){
                     >Update User</Button>
                 </Container>
             </Form>
+
+            {showMessage && (
+                <MessageBox
+                    message={messageContent}
+                    show={showMessage}
+                    onClose={handleCloseMessage}
+                />
+            )}
         </>
     );
 }

@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react"
-import axios from 'axios'
 import { Container, Form, Button } from "react-bootstrap"
+import MessageBox from "../../../customed_messagebox/MessageBox.jsx"
+import axios from 'axios'
 import '../../../design/FeedBack.css'
 
 export default function FeedBack(){
     const [feedBack, setFeedBack] = useState('');
     const [token, setToken] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageContent, setMessageContent] = useState('');
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
@@ -18,7 +21,8 @@ export default function FeedBack(){
 
         try{
             if(!feedBack){
-                alert("Please Fill-up the Feedback Form");
+                setMessageContent("Please Fill-up the Feedback Form");
+                setShowMessage(true);
                 return;
             }
 
@@ -32,16 +36,23 @@ export default function FeedBack(){
             })
             
             if(response.status === 201){
-                alert("Feedback was submitted successfully");
+                setMessageContent("Feedback was submitted successfully");
+                setMessageContent(true);
                 setFeedBack('');
             }else{
-                alert("Failed to submit feedback: " + response.data.message); 
+                setMessageContent("Failed to submit feedback: " + response.data.message); 
+                setMessageContent(true);
             }
         }
         catch(error){
             console.error("Error: ", error.response ? error.response.data : error.message);
-            alert("An error occurred while submitting feedback " + (error.response ? error.response.data.message : error.message));
+            setMessageContent("An error occurred while submitting feedback " + (error.response ? error.response.data.message : error.message));
+            setShowMessage(true);
         }
+    }
+
+    const handleCloseMessage = ()=> {
+        setShowMessage(false);
     }
     
     return(
@@ -66,6 +77,14 @@ export default function FeedBack(){
                         </Container>
                 </Container>
             </Form>
+
+            {showMessage && (
+                <MessageBox
+                    message={messageContent}
+                    show={showMessage}
+                    onClose={handleCloseMessage}
+                />
+            )}
         </>
     );
 }

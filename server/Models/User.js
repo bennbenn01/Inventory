@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     age: { type: Number, required: true, min: 1, max: 120 },
     position: { type: String, required: true },
     startedDate: { type: String, required: true },
-    role: { type: String, required: true }
+    role: { type: String }
 }, { collection: 'users' });
 
 const User =  mongoose.model('User', userSchema);

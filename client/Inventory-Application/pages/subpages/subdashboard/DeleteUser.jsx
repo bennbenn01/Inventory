@@ -1,11 +1,14 @@
 import { useState } from "react"
 import { Container, Form, Button } from 'react-bootstrap'
+import MessageBox from "../../../customed_messagebox/MessageBox"
 import '../../../design/DeleteUser.css'
 import axios from 'axios'
 
 export default function DeleteUser(){
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageContent, setMessageContent] = useState('');
     const token = localStorage.getItem('token');
     
     const handleDeleteUser = async(e)=> {
@@ -13,7 +16,8 @@ export default function DeleteUser(){
 
         try{
             if(!firstName || !lastName){
-                alert("No firstname or lastname was inputted");
+                setMessageContent("No firstname or lastname was inputted");
+                setShowMessage(true);
                 return;
             }
     
@@ -26,15 +30,23 @@ export default function DeleteUser(){
             })
     
             if(response.status === 200){
-                alert("The User has been deleted successfully");
+                setMessageContent("The User has been deleted successfully");
+                setShowMessage(true);
                 setFirstname('');
                 setLastname('');
             }else{
-                alert("Failed to delete a user: " + response.data.message);
+                setMessageContent("Failed to delete a user: " + response.data.message);
+                setShowMessage(true);
             }
         }catch(error){
-            console.error(error);
+            console.error(error.response ? error.response.data : error.message);
+            setMessageContent("An error occurred while deleting the user: " + error ? error.response.data.message : error.message);
+            setShowMessage(true);
         }
+    }
+
+    const handleCloseMessage = ()=> {
+        setShowMessage(false);
     }
 
     return(
@@ -64,6 +76,14 @@ export default function DeleteUser(){
                         >Delete User</Button>
                 </Container>
             </Form>
+
+            {showMessage && (
+                <MessageBox
+                    message={messageContent}
+                    show={showMessage}
+                    onClose={handleCloseMessage}
+                />
+            )}
         </>
     );
 }

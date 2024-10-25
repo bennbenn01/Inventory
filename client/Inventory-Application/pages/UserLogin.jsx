@@ -6,12 +6,11 @@ import MessageBox from '../customed_messagebox/MessageBox.jsx'
 import '../design/UserLogin.css'
 import axios from 'axios'
 
-
 export default function UserLogin({ setIsAuthenticated, setRole }){
-    const{userName, setUsername} = useUser();
-    const[passWord, setPassword] = useState('');
-    const[showMessage, setShowMessage] = useState(false);
-    const[messageContent, setMessageContent] = useState('');
+    const {userName, setUsername} = useUser();
+    const [passWord, setPassword] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+    const [messageContent, setMessageContent] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e)=> {
