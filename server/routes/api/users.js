@@ -13,5 +13,4 @@ router.route('/update_user').put(restrict, userControllers.updateUser)
 router.route('/delete_user').delete(restrict, userControllers.deleteUser)
 router.route('/send_feedback').post(restrict, userControllers.sendFeedback)
 
-
 export default router;

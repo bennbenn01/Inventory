@@ -70,6 +70,28 @@
     margin: 20px;
 }
 
+.d-ShowUser-Table-Button{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.d-ShowUser-Table-Button:hover{
+    transition: 1s ease;
+    background-color: rgb(145, 145, 145);
+}
+
+.d-ShowUser-Form-Button-1:not(:hover){
+    transition: 1s ease;
+    background-color: white;
+}
+
+.d-ShowUser-Scrollbar{
+    overflow-y: auto;
+}
+
 .d-ShowUser-THead-Container, .d-ShowUser-TBody-Container{
     font-size: 15px;
     font-family: sans-serif;

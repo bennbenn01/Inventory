@@ -12,17 +12,19 @@ import UpdateUser from '../pages/subpages/subdashboard/UpdateUser.jsx'
 import DeleteUser from '../pages/subpages/subdashboard/DeleteUser.jsx'
 import Settings from '../pages/subpages/subdashboard/Settings.jsx'
 import FeedBack from '../pages/subpages/subdashboard/FeedBack.jsx'
+import ShowUsersForm from '../pages/subpages/subdashboard/ShowUsersForm.jsx'
+import ShowUsersTable from '../pages/subpages/subdashboard/ShowUsersTable.jsx'
 import './App.css'
 
 export default function App() {
   const savedMode = localStorage.getItem('darkMode');
   const [isDarkMode, setIsDarkMode] = useState(savedMode === 'true');
-  const [role, setRole] = useState(()=>{
-    return localStorage.getItem('role');
-  });
-
   const[isAuthenticated, setIsAuthenticated] = useState(()=>{
     return localStorage.getItem('isAuthenticated') === 'true'; 
+  });
+
+  const [role, setRole] = useState(()=>{
+    return localStorage.getItem('role');
   });
 
   useEffect(()=>{
@@ -46,9 +48,13 @@ export default function App() {
             {isAuthenticated ? (
               <>
                 <Route path='/dashboard' element={<><Header/> <Dashboard/></>}>
-                  <Route index element={<ShowUser/>} />
+                  <Route index element={<ShowUsersForm/>} />
                   <Route path='add_user' element={<AddUser/>}/>
-                  <Route path='show_users' element={<ShowUser/>}/>
+                  <Route path='show_users' element={<ShowUser/>}>
+                    <Route index element={<ShowUsersForm/>}/>
+                    <Route path='show_users_form' element={<ShowUsersForm/>}/>
+                    <Route path='show_users_table' element={<ShowUsersTable/>}/>
+                  </Route>
                   <Route path='update_user' element={<UpdateUser/>}/>
                   <Route path='delete_user' element={<DeleteUser/>}/>
                   <Route path='settings' element={<Settings onToggleMode={toggleMode} isDarkMode={isDarkMode}/>}/>
