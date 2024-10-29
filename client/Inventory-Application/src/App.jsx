@@ -4,14 +4,14 @@ import { UserProvider } from '../reusing_Context/UserContext.jsx'
 import UserLogin from '../pages/UserLogin.jsx'
 import Header from '../pages/subpages/Header.jsx'
 import AdminDashboard from '../pages/subpages/AdminDashboard.jsx'
-import ShowUser from '../pages/subpages/subdashboard/ShowUsers.jsx'
-import AddUser from '../pages/subpages/subdashboard/AddUser.jsx'
-import UpdateUser from '../pages/subpages/subdashboard/UpdateUser.jsx'
-import DeleteUser from '../pages/subpages/subdashboard/DeleteUser.jsx'
+import ShowUser from '../pages/subpages/subdashboard/user_side/ShowUsers.jsx'
+import AddUser from '../pages/subpages/subdashboard/user_side/AddUser.jsx'
+import UpdateUser from '../pages/subpages/subdashboard/user_side/UpdateUser.jsx'
+import DeleteUser from '../pages/subpages/subdashboard/user_side/DeleteUser.jsx'
 import Settings from '../pages/subpages/subdashboard/Settings.jsx'
 import FeedBack from '../pages/subpages/subdashboard/FeedBack.jsx'
-import ShowUsersForm from '../pages/subpages/subdashboard/ShowUsersForm.jsx'
-import ShowUsersTable from '../pages/subpages/subdashboard/ShowUsersTable.jsx'
+import ShowUsersForm from '../pages/subpages/subdashboard/user_side/ShowUsersForm.jsx'
+import ShowUsersTable from '../pages/subpages/subdashboard/user_side/ShowUsersTable.jsx'
 import './App.css'
 
 export default function App() {
@@ -46,7 +46,7 @@ export default function App() {
             {isAuthenticated ? (
               <>
                 {role === 'admin' && (
-                  <Route path='/admin_dashboard' element={<><Header/> <AdminDashboard/></>}>
+                <Route path='/admin_dashboard' element={<><Header/> <AdminDashboard/></>}>
                   <Route index element={<ShowUsersForm/>} />
                   <Route path='add_user' element={<AddUser/>}/>
 

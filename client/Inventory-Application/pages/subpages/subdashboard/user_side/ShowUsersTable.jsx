@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { Container, Table, Button } from "react-bootstrap"
-import '../../../design/ShowUsers.css'
+import '../../../../design/ShowUsers.css'
 
 export default function ShowUsersTable(){
     const [users, setUsers] = useState([]);

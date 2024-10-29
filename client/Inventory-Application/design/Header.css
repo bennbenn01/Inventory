@@ -24,11 +24,21 @@
     text-decoration: none;
 }
 
+.navbar-username{
+    margin: 5px 0px;
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    cursor: default; 
+}
+
 .header-Navbar-Box-Container{
     position: relative;
 }
 
 .header-Dropdown-Toggle{
+    margin-left: 20px;
     border: none;
     background-color: rgba(0, 0, 0, 0);
     cursor: pointer;

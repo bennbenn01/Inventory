@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { Container, Form, Button, Col, Row } from 'react-bootstrap'
-import MessageBox from "../../../customed_messagebox/MessageBox.jsx"
-import '../../../design/AddUser.css'
+import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import MessageBox from "../../../../customed_messagebox/MessageBox.jsx"
+import '../../../../design/UpdateUser.css'
 import axios from 'axios'
 
-export default function AddUser(){
+export default function UpdateUser(){
     const [firstName, setFirstname] = useState('');
     const [lastName, setLastname] = useState('');
     const [userName, setUsername] = useState('');
@@ -18,7 +18,7 @@ export default function AddUser(){
     const [messageContent, setMessageContent] = useState('');
     const token = localStorage.getItem('token');
 
-    const handleAddUser = async (e)=> {
+    const handleUpdateUser = async (e)=> {
         e.preventDefault();
 
         try{
@@ -29,39 +29,38 @@ export default function AddUser(){
                 setShowMessage(true);
                 return;
             }
-
+    
             if(passWord.length < 5){
                 setMessageContent("The password was too short! Please try again");
                 setShowMessage(true);
                 return;
             }
-
+    
             if(passWord !== repeatPassword){
                 setMessageContent("The password was mismatch");
                 setShowMessage(true);
                 return;
             }
-
-            const response = await axios.post(import.meta.env.VITE_APP_SERVER_NEW_USER, {
-                firstName,
+    
+            const response = await axios.put(import.meta.env.VITE_APP_SERVER_UPDATE_USER, {
+                firstName, 
                 lastName, 
                 userName, 
-                passWord,
+                passWord, 
                 address,
-                age: Number(age),
+                age: Number(age), 
                 position,
-                startedDate,
+                startedDate
             }, {
-                headers: { 
+                headers: {
                     "Content-Type": 'application/json',
-                    "Authorization": `Bearer ${token}` 
+                    "Authorization": `Bearer ${token}`
                 }
             })
-            
-            if(response.status === 201)
-            {
-                setMessageContent("New user was been added");
-                setShowMessage(true); 
+    
+            if(response.status >= 200 && response.status < 300){
+                setMessageContent("The User's information was updated");
+                setShowMessage(true);
                 setFirstname('');
                 setLastname('');
                 setUsername('');
@@ -72,13 +71,12 @@ export default function AddUser(){
                 setPosition('');
                 setStarteddate('');
             }else{
-                setMessageContent("Failed to add user: " + response.data.message);
-                setShowMessage(true); 
+                setMessageContent("Failed to update the user's information: " + response.data.message);
+                setShowMessage(true);
             }
-            
         }catch(error){
-            console.error("Error:", error.response ? error.response.data : error.message);
-            setMessageContent("An error occurred while adding the user: " + (error.response ? error.response.data.message : error.message));
+            console.error(error.response ? error.response.data : error.message);
+            setMessageContent("An error occurred while updating the user: " + error ? error.response.data.message : error.message);
             setShowMessage(true);
         }
     }
@@ -89,13 +87,13 @@ export default function AddUser(){
 
     return(
         <>
-            <Form> 
-                <h2 className='d-AddUser-Form-Title'>Add User</h2>
-
+            <Form>
+                <h2 className='d-UpdateUser-Form-Title'>Update User</h2>                
+                
                 <Container>
-                    <Row className='d-AddUser-Form-Row-Container-1'>
-                        <Col md={2} className='d-AddUser-Form-Col-Container-1'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-1'>First Name</Form.Label>
+                    <Row className='d-UpdateUser-Form-Row-Container-1'>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-1'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>First Name</Form.Label>
                         </Col>
 
                         <Col md={2}>
@@ -103,12 +101,12 @@ export default function AddUser(){
                                 type='text' 
                                 placeholder='Enter first name'
                                 value={firstName}
-                                className='d-AddUser-Form-Control-Sub-Col-1'
+                                className='d-UpdateUser-Form-Control-Sub-Col-1'
                                 onChange={(e)=> setFirstname(e.target.value)}/><br/>
                         </Col>
 
-                        <Col md={2} className='d-AddUser-Form-Col-Container-1'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-1'>Last Name</Form.Label>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-1'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>Last Name</Form.Label>
                         </Col>
 
                         <Col md={2}>
@@ -116,72 +114,72 @@ export default function AddUser(){
                                 type='text' 
                                 placeholder='Enter last name'
                                 value={lastName}
-                                className='d-AddUser-Form-Control-Sub-Col-1'
+                                className='d-UpdateUser-Form-Control-Sub-Col-1'
                                 onChange={(e)=> setLastname(e.target.value)}/><br/>
                         </Col>
 
-                        <Col md={2} className='d-AddUser-Form-Col-Container-1'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-1'>Username</Form.Label>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-1'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>Username</Form.Label>
                         </Col>
 
-                        <Col md={2}>
+                        <Col md={2}> 
                             <Form.Control 
                                 type='text' 
                                 placeholder='Enter username'
                                 value={userName}
-                                className='d-AddUser-Form-Control-Sub-Col-1'                                    
+                                className='d-UpdateUser-Form-Control-Sub-Col-1'
                                 onChange={(e)=> setUsername(e.target.value)}/><br/>
                         </Col>
-                        
-                        <Col md={2} className='d-AddUser-Form-Col-Container-1'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-1'>Password</Form.Label>
+
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-1'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>Previous Password</Form.Label>
                         </Col>
-                        
+                            
                         <Col md={2}>
                             <Form.Control 
                                 type='password' 
                                 placeholder='Enter password'
                                 value={passWord}
-                                className='d-AddUser-Form-Control-Sub-Col-1'                                    
+                                className='d-UpdateUser-Form-Control-Sub-Col-1'
                                 onChange={(e)=> setPassword(e.target.value)}/><br/>
                         </Col>
-                        
-                        <Col md={2} className='d-AddUser-Form-Col-Container-1'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-1'>Repeat Password</Form.Label>
-                        </Col>
 
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-1'> 
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-1'>Repeat Password</Form.Label>
+                        </Col>
+                        
                         <Col md={2}>
                             <Form.Control 
                                 type='password' 
                                 placeholder='Enter repeat password'
                                 value={repeatPassword}
-                                className='d-AddUser-Form-Control-Sub-Col-1' 
+                                className='d-UpdateUser-Form-Control-Sub-Col-1'
                                 onChange={(e)=> setRepeatpassword(e.target.value)}/><br/>
                         </Col>
                     </Row>
                 </Container>
 
                 <hr/>
-                
-                <h2 className='d-AddUser-Form-Title'>Address</h2>
+
+                <h2 className='d-UpdateUser-Form-Title'>Address</h2>
 
                 <Container>
-                    <Row className='d-AddUser-Form-Row-Container-2'>
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'>   
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>Street</Form.Label>
+                    <Row className='d-UpdateUser-Form-Row-Container-2'>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>Street</Form.Label>
                         </Col>
-                        
+
                         <Col md={4}>
                             <Form.Control 
                                 type='text' 
                                 placeholder='Enter street'
                                 value={address.street}
-                                className='d-AddUser-Form-Control-Sub-Col-2'
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setAddress({...address, street: e.target.value})}/>
                         </Col>
 
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'> 
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>City</Form.Label>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>City</Form.Label>
                         </Col>
 
                         <Col md={4}>
@@ -189,27 +187,27 @@ export default function AddUser(){
                                 type='text' 
                                 placeholder='Enter city'
                                 value={address.city}
-                                className='d-AddUser-Form-Control-Sub-Col-2'
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setAddress({...address, city: e.target.value})}/>
                         </Col>
                     </Row>
 
-                    <Row className='d-AddUser-Form-Row-Container-2'>
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>Country</Form.Label>
+                    <Row className='d-UpdateUser-Form-Row-Container-2'>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>Country</Form.Label>
                         </Col>
-                        
+
                         <Col md={4}>
                             <Form.Control 
                                 type='text' 
                                 placeholder='Enter country'
                                 value={address.country}
-                                className='d-AddUser-Form-Control-Sub-Col-2'
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setAddress({...address, country: e.target.value})}/>
                         </Col>
 
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>Province</Form.Label>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>Province</Form.Label>
                         </Col>
 
                         <Col md={4}>
@@ -217,27 +215,27 @@ export default function AddUser(){
                                 type='text' 
                                 placeholder='Enter province'
                                 value={address.province}
-                                className='d-AddUser-Form-Control-Sub-Col-2'
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setAddress({...address, province: e.target.value})}/>
                         </Col>
                     </Row>
 
-                    <Row className='d-AddUser-Form-Row-Container-2'>
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>Zip</Form.Label>
+                    <Row className='d-UpdateUser-Form-Row-Container-2'>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>Zip</Form.Label>
                         </Col>
 
-                        <Col md={4}>    
+                        <Col md={4}>
                             <Form.Control 
                                 type='text' 
                                 placeholder='Enter zip'
                                 value={address.zip}
-                                className='d-AddUser-Form-Control-Sub-Col-2'
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setAddress({...address, zip: e.target.value})}/>
                         </Col>
                         
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>Age</Form.Label>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>Age</Form.Label>
                         </Col>
 
                         <Col md={4}>
@@ -245,45 +243,45 @@ export default function AddUser(){
                                 type='text' 
                                 placeholder='Enter age'
                                 value={age}
-                                className='d-AddUser-Form-Control-Sub-Col-2'
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setAge(e.target.value)}/>
                         </Col>
                     </Row>
 
-                    <Row className='d-AddUser-Form-Row-Container-2'>
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>Position</Form.Label>
+                    <Row className='d-UpdateUser-Form-Row-Container-2'>
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>Position</Form.Label>
                         </Col>
 
-                        <Col md={4}> 
+                        <Col md={4}>
                             <Form.Control 
                                 type='text' 
                                 placeholder='Enter position'
                                 value={position}
-                                className='d-AddUser-Form-Control-Sub-Col-2'
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setPosition(e.target.value)}/>
                         </Col>
-
-                        <Col md={2} className='d-AddUser-Form-Col-Container-2'>
-                            <Form.Label className='d-AddUser-Form-Label-Sub-Col-2'>Started Date of Account</Form.Label>
+                            
+                        <Col md={2} className='d-UpdateUser-Form-Col-Container-2'>    
+                            <Form.Label className='d-UpdateUser-Form-Label-Sub-Col-2'>Started Date of Account</Form.Label>
                         </Col>
-
+                        
                         <Col md={4}>
                             <Form.Control 
                                 type='text'
                                 placeholder='Enter Date (ex. mm-dd-yyyy)'
                                 value={startedDate}
-                                className='d-AddUser-Form-Control-Sub-Col-2'                                    
+                                className='d-UpdateUser-Form-Control-Sub-Col-2'
                                 onChange={(e)=> setStarteddate(e.target.value)}/>
                         </Col>
                     </Row>
                 </Container>
 
-                <Container className='d-AddUser-Form-Button-Container'>
+                <Container className='d-UpdateUser-Form-Button-Container'>
                     <Button 
-                        onClick={handleAddUser}
-                        className='d-AddUser-Form-Button'
-                    >Add User</Button>
+                        onClick={handleUpdateUser}
+                        className='d-UpdateUser-Form-Button'
+                    >Update User</Button>
                 </Container>
             </Form>
 

@@ -9,8 +9,9 @@ import jwt from 'jsonwebtoken'
 dotenv.config();
 
 const fileSystem = fs;
-const logsFilePath = './Logs/logs.txt';
 const logsDirPath = './Logs';
+const adminLogsFilePath = './Logs/admin_logs.txt';
+const userLogsFilePath = './Logs/user_logs.txt';
 const envFilePath = './.env';
 
 function generatedKey(){
@@ -35,7 +36,7 @@ function updatedToken(token){
     }
 }
 
-const logActivity = (status, userName)=> {
+const adminlogActivity = (status, userName)=> {
     const now = Date();
     const formattedDate = format(now, 'HH:mm a MM/dd/yyyy');
     const logEntry = `Date: ${formattedDate}\t Status: ${status} \tUser: ${userName} \t\t\n`;
@@ -45,12 +46,31 @@ const logActivity = (status, userName)=> {
         console.log("Logs Directory was been created");
     }
 
-    if(!fileSystem.existsSync(logsFilePath)){
-        fileSystem.writeFileSync(logsFilePath, logEntry);
-        console.log("Logs was been created");
+    if(!fileSystem.existsSync(adminLogsFilePath)){
+        fileSystem.writeFileSync(adminLogsFilePath, logEntry);
+        console.log("Admin Logs was been created");
     }else{
-        fileSystem.appendFileSync(logsFilePath, logEntry);
-        console.log("Logs was been updated");
+        fileSystem.appendFileSync(adminLogsFilePath, logEntry);
+        console.log("Admin Logs was been updated");
+    }
+};
+
+const userlogActivity = (status, userName)=> {
+    const now = Date();
+    const formattedDate = format(now, 'HH:mm a MM/dd/yyyy');
+    const logEntry = `Date: ${formattedDate}\t Status: ${status} \tUser: ${userName} \t\t\n`;
+
+    if(!fileSystem.existsSync(logsDirPath)){
+        fileSystem.mkdirSync(logsDirPath);
+        console.log("Logs Directory was been created");
+    }
+
+    if(!fileSystem.existsSync(userLogsFilePath)){
+        fileSystem.writeFileSync(userLogsFilePath, logEntry);
+        console.log("User Logs was been created");
+    }else{
+        fileSystem.appendFileSync(userLogsFilePath, logEntry);
+        console.log("User Logs was been updated");
     }
 };
 
@@ -64,8 +84,6 @@ const loginUser = async (req, res)=> {
             return res.status(400).json({message: 'Invalid username or password'});
         }
 
-        logActivity('Log-in', userName);
-        
         let secretKey = process.env.TOKEN;
         
         if (!secretKey) {
@@ -76,6 +94,14 @@ const loginUser = async (req, res)=> {
         const role = user.role;
         const token = jwt.sign({userName: user.userName, role}, secretKey, {expiresIn: '24h'});
         console.log('Generated token:', token);
+            
+        if(role === 'admin'){
+            adminlogActivity('Log-in', userName);
+        }else if(role === 'user'){
+            userlogActivity('Log-in', userName);
+        }else{
+            res.status(404).json({message: 'User was not found'});
+        }
 
         res.json({message: 'Login Successful', userName, token, role});
     }catch(error){
@@ -84,11 +110,25 @@ const loginUser = async (req, res)=> {
     }
 };
 
-const logoutUser = (req, res)=>{
+const logoutUser = async (req, res)=> {
     const { userName } = req.body;
 
     try{
-        logActivity('Log-out', userName);
+        const user = await User.findOne({userName});
+
+        if(user){
+            if(user.role === 'admin'){
+                adminlogActivity('Log-out', userName);
+            }
+            else if(user.role === 'user'){
+                userlogActivity('Log-out', userName);
+            }
+            else{
+                res.status(404).json({message: 'User was not found'});
+            }
+        }else{
+            res.status(404).json({message: 'User was not found'});
+        }
 
         const newToken = generatedKey();
         updatedToken(newToken);

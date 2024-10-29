@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Container, Navbar, Nav, Dropdown } from 'react-bootstrap'
-import { useUser } from '../../reusing_Context/UserContext.jsx'
 import axios from 'axios'
 import '../../design/Header.css'
 
 export default function Header(){
     const [showDropdown, setShowDropdown] = useState(false);
+    const [userName, setUsername] = useState('');
     const navigate = useNavigate();
-    const{ userName } = useUser();  
     const role = localStorage.getItem('role');
 
     const toggleDropdown = ()=> {
@@ -62,6 +61,22 @@ export default function Header(){
         }
     }, [])
 
+    useEffect(()=> {
+        async function fetchUser() {
+            try{
+                const storageUsername = localStorage.getItem('userName');
+                if(storageUsername){
+                    setUsername(storageUsername);
+                }else{
+                    console.error("No user was logged in");
+                }
+            }catch(error){
+                console.error("Failed to fetch user: " + error);
+            }
+        }
+        fetchUser();
+    }, [])
+
     return(
         <Container className='header-Navbar-Container'>
             <Navbar className='header-Navbar-Box-Container'>
@@ -71,6 +86,11 @@ export default function Header(){
                     onClick={handleClickTitle}>
                     INVENTORY
                 </Navbar.Brand>
+                
+                <div style={{ flexGrow: 1 }} />
+
+                <span className='navbar-username'>{userName}</span>
+
                 <Nav>
                     <Dropdown className='header-Dropdown-Container'>
                         <Dropdown.Toggle className='header-Dropdown-Toggle'>

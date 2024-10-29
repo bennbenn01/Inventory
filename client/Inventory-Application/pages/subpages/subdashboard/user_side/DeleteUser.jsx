@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Container, Form, Button } from 'react-bootstrap'
-import MessageBox from "../../../customed_messagebox/MessageBox"
-import '../../../design/DeleteUser.css'
+import MessageBox from "../../../../customed_messagebox/MessageBox"
+import '../../../../design/DeleteUser.css'
 import axios from 'axios'
 
 export default function DeleteUser(){

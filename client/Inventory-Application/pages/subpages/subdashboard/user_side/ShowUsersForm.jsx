@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
-import MessageBox from "../../../customed_messagebox/MessageBox.jsx"
+import MessageBox from "../../../../customed_messagebox/MessageBox.jsx"
 import axios from 'axios'  
-import '../../../design/ShowUsers.css'
+import '../../../../design/ShowUsers.css'
 
 export default function ShowUsersForm(){
     const [firstName, setFirstname] = useState('');
