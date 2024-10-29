@@ -17,7 +17,7 @@ export default function ShowUsersTable(){
     }, []);
 
     const handleReturnButton = ()=> {
-        navigate('/dashboard/shows_users/show_users_form');
+        navigate('/admin_dashboard/shows_users/show_users_form');
     }
 
     return(
@@ -28,7 +28,7 @@ export default function ShowUsersTable(){
                         className='d-ShowUser-Table-Button'
                         onClick={handleReturnButton}
                         >Back</Button>
-                    <h1 className='d-ShowUser-Form-Title'>List of Users</h1>
+                    <h1 className='d-ShowUser-Table-Title'>List of Users</h1>
                 </Container>
 
                 <Container className='d-ShowUser-Scrollbar'>

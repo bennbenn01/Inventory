@@ -7,7 +7,15 @@ export default function Settings({onToggleMode, isDarkMode}) {
     const role = localStorage.getItem('role');
 
     const handleFeedbackOption = ()=> {
-        navigate(role === 'admin' ? '/admin_dashboard/feedback' : '/dashboard/feedback');
+        if(role === 'admin'){
+            navigate('/admin_dashboard/feedback'); 
+        }else if(role === 'user'){
+            ('/dashboard/feedback');
+        }
+        else{
+            setMessageContent("Error on getting the role of user/admin");
+            setShowMessage(true);
+        }
     }
 
     return(

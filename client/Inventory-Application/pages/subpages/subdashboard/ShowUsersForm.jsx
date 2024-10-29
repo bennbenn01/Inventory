@@ -34,7 +34,7 @@ export default function ShowUsersForm(){
             
             const users = Array.isArray(response.data) ? response.data : [response.data];
             localStorage.setItem('users', JSON.stringify(users)); 
-            navigate('/dashboard/show_users/show_users_table');
+            navigate('/admin_dashboard/show_users/show_users_table');
         }catch(error){
             console.error(error.response ? error.response.data : error.message);
             setMessageContent("An error occurred while getting information of the user: " + 
@@ -61,10 +61,10 @@ export default function ShowUsersForm(){
 
             setFirstname('');
             setLastname('');
-            if(location.pathname.startsWith('/dashboard')){
+            if(location.pathname.startsWith('/admin_dashboard')){
                 const users = Array.isArray(response.data) ? response.data : [];
                 localStorage.setItem('users', JSON.stringify(users));
-                navigate('/dashboard/show_users/show_users_table');
+                navigate('/admin_dashboard/show_users/show_users_table');
             }else{
                 const users = Array.isArray(response.data) ? response.data : [];
                 localStorage.setItem('users', JSON.stringify(users));

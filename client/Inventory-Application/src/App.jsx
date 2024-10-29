@@ -3,10 +3,8 @@ import { useState, useEffect } from 'react'
 import { UserProvider } from '../reusing_Context/UserContext.jsx'
 import UserLogin from '../pages/UserLogin.jsx'
 import Header from '../pages/subpages/Header.jsx'
-import Dashboard from '../pages/subpages/Dashboard.jsx'
 import AdminDashboard from '../pages/subpages/AdminDashboard.jsx'
 import ShowUser from '../pages/subpages/subdashboard/ShowUsers.jsx'
-import ShowInfo from '../pages/subpages/subdashboard/ShowInfo.jsx'
 import AddUser from '../pages/subpages/subdashboard/AddUser.jsx'
 import UpdateUser from '../pages/subpages/subdashboard/UpdateUser.jsx'
 import DeleteUser from '../pages/subpages/subdashboard/DeleteUser.jsx'
@@ -47,32 +45,30 @@ export default function App() {
 
             {isAuthenticated ? (
               <>
-                <Route path='/dashboard' element={<><Header/> <Dashboard/></>}>
+                {role === 'admin' && (
+                  <Route path='/admin_dashboard' element={<><Header/> <AdminDashboard/></>}>
                   <Route index element={<ShowUsersForm/>} />
                   <Route path='add_user' element={<AddUser/>}/>
+
                   <Route path='show_users' element={<ShowUser/>}>
                     <Route index element={<ShowUsersForm/>}/>
                     <Route path='show_users_form' element={<ShowUsersForm/>}/>
                     <Route path='show_users_table' element={<ShowUsersTable/>}/>
                   </Route>
+
                   <Route path='update_user' element={<UpdateUser/>}/>
                   <Route path='delete_user' element={<DeleteUser/>}/>
                   <Route path='settings' element={<Settings onToggleMode={toggleMode} isDarkMode={isDarkMode}/>}/>
                   <Route path='feedback' element={<FeedBack/>}/>
                 
-                  <Route path='*' element={<><Header/> <Navigate to='/dashboard'/></>}/>
+                  <Route path='*' element={<><Header/> <Navigate to='/admin_dashboard'/></>}/>
                 </Route>
-
-                {role === 'admin' && (
-                  <Route path='/admin_dashboard' element={<><Header/> <AdminDashboard/></>}>
-                    <Route index element={<ShowInfo/>} />
-                    <Route path='show_info' element={<ShowInfo/>} /> 
-                    <Route path='settings' element={<Settings onToggleMode={toggleMode} isDarkMode={isDarkMode}/>}/>
-                    <Route path='feedback' element={<FeedBack/>}/>
-
-                    <Route path='*' element={<><Header/> <Navigate to='/admin_dashboard'/></>} />
-                  </Route>
                 )}
+                
+                {role === 'role' && (
+                  <></>
+                )}
+
               </>
               ) : (
                 <Route path='*' element={<Navigate to='/login'/>}/>

@@ -9,9 +9,16 @@ export default function Header(){
     const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
     const{ userName } = useUser();  
+    const role = localStorage.getItem('role');
 
     const toggleDropdown = ()=> {
         setShowDropdown(prev => !prev)
+    }
+
+    const handleClickTitle = (e)=> {
+        e?.preventDefault();
+        
+        navigate(role === 'admin' ? '/admin_dashboard' :  '/dashboard');
     }
 
     const handleSettings = (e)=> {
@@ -58,7 +65,10 @@ export default function Header(){
     return(
         <Container className='header-Navbar-Container'>
             <Navbar className='header-Navbar-Box-Container'>
-                <Navbar.Brand className='navbar-Title'>
+                <Navbar.Brand 
+                    as={Link}
+                    className='navbar-Title'
+                    onClick={handleClickTitle}>
                     INVENTORY
                 </Navbar.Brand>
                 <Nav>

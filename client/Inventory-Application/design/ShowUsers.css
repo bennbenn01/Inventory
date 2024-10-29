@@ -1,4 +1,4 @@
-.d-ShowUser-Form-Container{
+ .d-ShowUser-Form-Container{
     display: flex;
     flex-direction: column;
     background-color: rgb(40, 40, 40);
@@ -70,6 +70,14 @@
     margin: 20px;
 }
 
+.d-ShowUser-Table-Title{
+    margin: 10px 0;
+    cursor: default;
+    text-align: center;
+    font-family: sans-serif;
+    color: white;
+}
+
 .d-ShowUser-Table-Button{
     border: none;
     border-radius: 10px;
@@ -99,7 +107,7 @@
 }
 
 .d-ShowUser-TH-Row{
-    padding: 0 5px;
+    padding: 0 10px;
 }
 
 .d-ShowUser-TD-Colspan{

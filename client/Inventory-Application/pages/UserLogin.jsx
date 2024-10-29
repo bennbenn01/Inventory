@@ -47,7 +47,14 @@ export default function UserLogin({ setIsAuthenticated, setRole }){
                 localStorage.setItem('role', response.data.role);
                 setUsername(response.data.userName);
 
-                navigate(response.data.role === 'admin' ? '/admin_dashboard' : '/dashboard'); 
+                if(response.data.role === 'admin'){
+                    navigate('/admin_dashboard');
+                }else if(response.data.role === 'user'){
+                    navigate('/dashboard'); 
+                }else{
+                    setMessageContent("Error on getting the role of user/admin");
+                    setShowMessage(true);
+                }
             }
         }catch(error){
             if(error.response){

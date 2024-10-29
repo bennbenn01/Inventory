@@ -1,4 +1,4 @@
-.ad-Container{
+.d-Container{
     display: flex;
     margin-inline: auto;
     margin: 0 20px;
@@ -12,10 +12,52 @@
     border-radius: 20px;
 }
 
-.ad-Box-Container{
+.d-Box-Container-1{
+    flex: 0;
+    background-color: rgb(70, 70, 70);
+    padding: 20px;
+}
+
+.d-Navbar-Container{
+    text-align: center;
+    margin: 85px 30px;
+}
+
+.d-Navbar-Brand{
+    font-size: 25px;
+    font-family: sans-serif;
+    font-weight: bold;  
+    color: white;
+    text-align: center;
+    cursor: default;
+}
+
+.d-Nav-Container{
+    margin: 50px 0;
+    text-align: center;
+}
+
+.d-Nav-Item{
+    margin: 20px 0;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.d-Link-Item{
+    white-space: nowrap;
+    text-decoration: none;
+    color: white;
+}
+
+.d-Nav-Item:hover{  
+    text-shadow: 1px 0 0 white;
+}
+
+.d-Box-Container-2{
     display: flex;
     flex-wrap: wrap;
     flex: 1;
     background-color: rgb(70, 70, 70);
-    padding: 130px 0;
+    padding: 20px;
 }
