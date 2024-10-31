@@ -1,4 +1,4 @@
-.d-DeleteUser-Form-Container{
+.ad-DeleteUser-Form-Container{
     display: flex;
     flex-direction: column;
     background-color: rgb(40, 40, 40);
@@ -7,7 +7,7 @@
     margin: 10px 30px;
 }
 
-.d-DeleteUser-Form-Title{
+.ad-DeleteUser-Form-Title{
     margin: 10px 0;
     cursor: default;
     text-align: center;
@@ -15,27 +15,27 @@
     color: white;
 }
 
-.d-DeleteUser-Form-Label{
+.ad-DeleteUser-Form-Label{
     font-family: sans-serif;
     font-size: 18px;
     color: white;
 }
 
-.d-DeleteUser-Form-Control{
+.ad-DeleteUser-Form-Control{
     padding: 10px;
     border: none;
     border-radius: 10px;
     margin: 5px 0;
 }
 
-.d-DeleteUser-Form-Button-Container{
+.ad-DeleteUser-Form-Button-Container{
     display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
 }
 
-.d-DeleteUser-Form-Button{
+.ad-DeleteUser-Form-Button{
     border: none;
     border-radius: 10px;
     padding: 12px;
@@ -43,12 +43,12 @@
     font-weight: bold;
 }
 
-.d-DeleteUser-Form-Button:hover{
+.ad-DeleteUser-Form-Button:hover{
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
 }
 
-.d-DeleteUser-Form-Button:not(:hover){
+.ad-DeleteUser-Form-Button:not(:hover){
     transition: 1s ease;
     background-color: white;
 }

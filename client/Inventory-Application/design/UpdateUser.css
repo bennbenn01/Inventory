@@ -1,64 +1,64 @@
-.d-UpdateUser-Form-Title{
+.ad-UpdateUser-Form-Title{
     margin: 5px 0;
     color: white;
     text-align: center;
     font-family: sans-serif;
 }
 
-.d-UpdateUser-Form-Row-Container-1{
+.ad-UpdateUser-Form-Row-Container-1{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0 10px;
     align-items: center;     
 }
 
-.d-UpdateUser-Form-Col-Container-1{
+.ad-UpdateUser-Form-Col-Container-1{
     color: white;
 }
 
-.d-UpdateUser-Form-Label-Sub-Col-1{
+.ad-UpdateUser-Form-Label-Sub-Col-1{
     font-weight: bold;
     font-family: sans-serif;
     font-size: 15px;
 }
 
-.d-UpdateUser-Form-Control-Sub-Col-1{
+.ad-UpdateUser-Form-Control-Sub-Col-1{
     margin: 5px 0;
     padding: 10px;
     border: none;
     border-radius: 5px;
 }
 
-.d-UpdateUser-Form-Row-Container-2{
+.ad-UpdateUser-Form-Row-Container-2{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0 10px;
     align-items: center;
 }
 
-.d-UpdateUser-Form-Col-Container-2{
+.ad-UpdateUser-Form-Col-Container-2{
     color: white;
 }
 
-.d-UpdateUser-Form-Label-Sub-Col-2{
+.ad-UpdateUser-Form-Label-Sub-Col-2{
     font-weight: bold;
     font-family: sans-serif;
     font-size: 15px;
 }
 
-.d-UpdateUser-Form-Control-Sub-Col-2{
+.ad-UpdateUser-Form-Control-Sub-Col-2{
     margin: 5px 0;
     padding: 10px;
     border: none;
     border-radius: 5px;
 }
 
-.d-UpdateUser-Form-Button-Container{
+.ad-UpdateUser-Form-Button-Container{
     display: flex;
     justify-content: center;
 }
 
-.d-UpdateUser-Form-Button{
+.ad-UpdateUser-Form-Button{
     margin-top: 20px;
     border: none;
     border-radius: 10px;
@@ -67,12 +67,12 @@
     font-weight: bold;   
 }
 
-.d-UpdateUser-Form-Button:hover{
+.ad-UpdateUser-Form-Button:hover{
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
 }
 
-.d-UpdateUser-Form-Button:not(:hover){
+.ad-UpdateUser-Form-Button:not(:hover){
     transition: 1s ease;
     background-color: white;
 }

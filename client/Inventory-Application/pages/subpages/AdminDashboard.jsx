@@ -5,27 +5,27 @@ import '../../design/AdminDashboard.css'
 export default function AdminDashboard(){
     return(
         <>
-            <Container className='d-Container'>
-                <Container className="box d-Box-Container-1">
-                    <Navbar className='d-Navbar-Container'>
-                        <Nav className='d-Nav-Container'>
-                            <Nav.Item className='d-Nav-Item'>
-                                <Link className='d-Link-Item' to='add_user'>Add User</Link>
+            <Container className='ad-Container'>
+                <Container className="box ad-Box-Container-1">
+                    <Navbar className='ad-Navbar-Container'>
+                        <Nav className='ad-Nav-Container'>
+                            <Nav.Item className='ad-Nav-Item'>
+                                <Link className='ad-Link-Item' to='add_user'>Add User</Link>
                             </Nav.Item>
-                            <Nav.Item className='d-Nav-Item'>
-                                <Link className='d-Link-Item' to='show_users'>Show Users</Link>
+                            <Nav.Item className='ad-Nav-Item'>
+                                <Link className='ad-Link-Item' to='show_users'>Show Users</Link>
                             </Nav.Item>
-                            <Nav.Item className='d-Nav-Item'>
-                                <Link className='d-Link-Item' to='update_user'>Update User</Link>
+                            <Nav.Item className='ad-Nav-Item'>
+                                <Link className='ad-Link-Item' to='update_user'>Update User</Link>
                             </Nav.Item>
-                            <Nav.Item className='d-Nav-Item'>
-                                <Link className='d-Link-Item' to='delete_user'>Delete User</Link>
+                            <Nav.Item className='ad-Nav-Item'>
+                                <Link className='ad-Link-Item' to='delete_user'>Delete User</Link>
                             </Nav.Item>
                         </Nav>
                     </Navbar>
                 </Container>
 
-                <Container className='box d-Box-Container-2'>
+                <Container className='box ad-Box-Container-2'>
                     <Outlet/>
                 </Container>
             </Container>

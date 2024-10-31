@@ -41,6 +41,7 @@ export default function Header(){
                 localStorage.removeItem('isAuthenticated');
                 localStorage.removeItem('userName');
                 localStorage.removeItem('token');
+                localStorage.removeItem('role');
                 navigate('/login');
             }
         }catch(error){

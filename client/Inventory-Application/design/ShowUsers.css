@@ -1,4 +1,4 @@
- .d-ShowUser-Form-Container{
+ .ad-ShowUser-Form-Container{
     display: flex;
     flex-direction: column;
     background-color: rgb(40, 40, 40);
@@ -7,7 +7,7 @@
     margin: 10px 30px;
 }
 
-.d-ShowUser-Form-Title{
+.ad-ShowUser-Form-Title{
     margin: 10px 0;
     cursor: default;
     text-align: center;
@@ -15,27 +15,27 @@
     color: white;
 }
 
-.d-ShowUser-Form-Label{
+.ad-ShowUser-Form-Label{
     font-family: sans-serif;
     font-size: 18px;
     color: white;
 }
 
-.d-ShowUser-Form-Control{
+.ad-ShowUser-Form-Control{
     padding: 10px;
     border: none;
     border-radius: 10px;
     margin: 5px 0;
 }
 
-.d-ShowUser-Form-Button-Container{
+.ad-ShowUser-Form-Button-Container{
     display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
 }
 
-.d-ShowUser-Form-Button-1, .d-ShowUser-Form-Button-2{
+.ad-ShowUser-Form-Button-1, .ad-ShowUser-Form-Button-2{
     border: none;
     border-radius: 10px;
     padding: 12px;
@@ -43,34 +43,34 @@
     font-weight: bold;
 }
 
-.d-ShowUser-Form-Button-1:hover{
+.ad-ShowUser-Form-Button-1:hover{
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
 }
 
-.d-ShowUser-Form-Button-2:hover{
+.ad-ShowUser-Form-Button-2:hover{
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
 }
 
-.d-ShowUser-Form-Button-1:not(:hover){
+.ad-ShowUser-Form-Button-1:not(:hover){
     transition: 1s ease;
     background-color: white;
 }
 
-.d-ShowUser-Form-Button-2:not(:hover){
+.ad-ShowUser-Form-Button-2:not(:hover){
     transition: 1s ease;
     background-color: white;
 }
 
-.d-ShowUser-Table-Container{
+.ad-ShowUser-Table-Container{
     background-color: rgb(40, 40, 40);
     border-radius: 20px;
     padding: 10px;
     margin: 20px;
 }
 
-.d-ShowUser-Table-Title{
+.ad-ShowUser-Table-Title{
     margin: 10px 0;
     cursor: default;
     text-align: center;
@@ -78,7 +78,7 @@
     color: white;
 }
 
-.d-ShowUser-Table-Button{
+.ad-ShowUser-Table-Button{
     border: none;
     border-radius: 10px;
     padding: 10px;
@@ -86,34 +86,34 @@
     font-weight: bold;
 }
 
-.d-ShowUser-Table-Button:hover{
+.ad-ShowUser-Table-Button:hover{
     transition: 1s ease;
     background-color: rgb(145, 145, 145);
 }
 
-.d-ShowUser-Form-Button-1:not(:hover){
+.ad-ShowUser-Form-Button-1:not(:hover){
     transition: 1s ease;
     background-color: white;
 }
 
-.d-ShowUser-Scrollbar{
+.ad-ShowUser-Scrollbar{
     overflow-y: auto;
 }
 
-.d-ShowUser-THead-Container, .d-ShowUser-TBody-Container{
+.ad-ShowUser-THead-Container, .ad-ShowUser-TBody-Container{
     font-size: 15px;
     font-family: sans-serif;
     color: white;
 }
 
-.d-ShowUser-TH-Row{
+.ad-ShowUser-TH-Row{
     padding: 0 10px;
 }
 
-.d-ShowUser-TD-Colspan{
+.ad-ShowUser-TD-Colspan{
     text-align: center;
 }
 
-.d-ShowUser-TD-Row{
+.ad-ShowUser-TD-Row{
     text-align: center;
 }

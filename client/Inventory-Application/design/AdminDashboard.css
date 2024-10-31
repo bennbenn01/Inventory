@@ -1,4 +1,4 @@
-.d-Container{
+.ad-Container{
     display: flex;
     margin-inline: auto;
     margin: 0 20px;
@@ -12,18 +12,18 @@
     border-radius: 20px;
 }
 
-.d-Box-Container-1{
+.ad-Box-Container-1{
     flex: 0;
     background-color: rgb(70, 70, 70);
     padding: 20px;
 }
 
-.d-Navbar-Container{
+.ad-Navbar-Container{
     text-align: center;
     margin: 80px 30px;
 }
 
-.d-Navbar-Brand{
+.ad-Navbar-Brand{
     font-size: 25px;
     font-family: sans-serif;
     font-weight: bold;  
@@ -32,29 +32,29 @@
     cursor: default;
 }
 
-.d-Nav-Container{
+.ad-Nav-Container{
     margin: 50px 0;
     text-align: center;
 }
 
-.d-Nav-Item{
+.ad-Nav-Item{
     margin: 20px 0;
     cursor: pointer;
     font-family: sans-serif;
     font-weight: bold;
 }
 
-.d-Link-Item{
+.ad-Link-Item{
     white-space: nowrap;
     text-decoration: none;
     color: white;
 }
 
-.d-Nav-Item:hover{  
+.ad-Nav-Item:hover{  
     text-shadow: 1px 0 0 white;
 }
 
-.d-Box-Container-2{
+.ad-Box-Container-2{
     display: flex;
     flex-wrap: wrap;
     flex: 1;

@@ -84,32 +84,32 @@ export default function ShowUsersForm(){
 
     return(
         <>
-            <Form className='d-ShowUser-Form-Container'>
-                <h1 className='d-ShowUser-Form-Title'>Show Users</h1>
-                <Form.Label className='d-ShowUser-Form-Label'>First Name</Form.Label>
+            <Form className='ad-ShowUser-Form-Container'>
+                <h1 className='ad-ShowUser-Form-Title'>Show Users</h1>
+                <Form.Label className='ad-ShowUser-Form-Label'>First Name</Form.Label>
                 <Form.Control 
                     type='text' 
                     placeholder='Enter first name'
                     value={firstName}
-                    className='d-ShowUser-Form-Control'
+                    className='ad-ShowUser-Form-Control'
                     onChange={(e)=> setFirstname(e.target.value)}/><br/>
 
-                <Form.Label className='d-ShowUser-Form-Label'>Last Name</Form.Label>
+                <Form.Label className='ad-ShowUser-Form-Label'>Last Name</Form.Label>
                 <Form.Control 
                     type='text' 
                     placeholder='Enter last name'
                     value={lastName}
-                    className='d-ShowUser-Form-Control'
+                    className='ad-ShowUser-Form-Control'
                     onChange={(e)=> setLastname(e.target.value)}/><br/>
             
-                <Container className='d-ShowUser-Form-Button-Container'>
+                <Container className='ad-ShowUser-Form-Button-Container'>
                     <Button 
-                        className='d-ShowUser-Form-Button-1'
+                        className='ad-ShowUser-Form-Button-1'
                         onClick={handleFindUser}
                         >Show User</Button>
 
                     <Button 
-                        className='d-ShowUser-Form-Button-2'
+                        className='ad-ShowUser-Form-Button-2'
                         onClick={handleFindUsers}
                         >Show All Users</Button>
                 </Container>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { UserProvider } from '../reusing_Context/UserContext.jsx'
 import UserLogin from '../pages/UserLogin.jsx'
 import Header from '../pages/subpages/Header.jsx'
+import Dashboard from '../pages/subpages/Dashboard.jsx'
 import AdminDashboard from '../pages/subpages/AdminDashboard.jsx'
 import ShowUser from '../pages/subpages/subdashboard/user_side/ShowUsers.jsx'
 import AddUser from '../pages/subpages/subdashboard/user_side/AddUser.jsx'
@@ -12,7 +13,9 @@ import Settings from '../pages/subpages/subdashboard/Settings.jsx'
 import FeedBack from '../pages/subpages/subdashboard/FeedBack.jsx'
 import ShowUsersForm from '../pages/subpages/subdashboard/user_side/ShowUsersForm.jsx'
 import ShowUsersTable from '../pages/subpages/subdashboard/user_side/ShowUsersTable.jsx'
+import AddItem from '../pages/subpages/subdashboard/item_side/AddItem.jsx'
 import './App.css'
+import ShowItem from '../pages/subpages/subdashboard/item_side/ShowItem.jsx'
 
 export default function App() {
   const savedMode = localStorage.getItem('darkMode');
@@ -43,7 +46,7 @@ export default function App() {
           <Routes>
             <Route path='/login' element={<UserLogin setIsAuthenticated={setIsAuthenticated} setRole={setRole}/>}/>
 
-            {isAuthenticated ? (
+            {isAuthenticated ? (  
               <>
                 {role === 'admin' && (
                 <Route path='/admin_dashboard' element={<><Header/> <AdminDashboard/></>}>
@@ -65,10 +68,19 @@ export default function App() {
                 </Route>
                 )}
                 
-                {role === 'role' && (
-                  <></>
-                )}
+                {role === 'user' && (
+                  <Route path='/dashboard' element={<><Header/><Dashboard/></>}>
+                    <Route index element={<ShowItem/>}/>
+                    <Route path='add_item' element={<AddItem/>}/>
 
+                    <Route path='show_item'/>
+
+                    <Route path='settings' element={<Settings onToggleMode={toggleMode} isDarkMode={isDarkMode}/>}/>
+                    <Route path='feedback' element={<FeedBack/>}/>
+
+                    <Route path='*' element={<><Header/> <Navigate to='/dashboard'/></>}/>
+                  </Route>
+                )}
               </>
               ) : (
                 <Route path='*' element={<Navigate to='/login'/>}/>
