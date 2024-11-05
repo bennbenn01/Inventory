@@ -2,17 +2,22 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import users from './routes/api/users.js'
+import api from './routes/api.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import errorHandler from './Middlewares/errorHandler.js'
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public'))); 
 
 mongoose.connect(process.env.MONGO_API,{
     dbName: 'inventory'
@@ -24,7 +29,7 @@ app.get('/', (req, res)=> {
     res.send("Server is Online");
 });
 
-app.use('/users', users);
+app.use('/v1/data', api);
 
 app.use(errorHandler);
 

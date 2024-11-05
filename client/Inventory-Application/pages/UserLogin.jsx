@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { Form, Container, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { useUser } from '../reusing_Context/UserContext.jsx'
 import MessageBox from '../customed_messagebox/MessageBox.jsx'
 import '../design/UserLogin.css'
 import axios from 'axios'
 
 export default function UserLogin({ setIsAuthenticated, setRole }){
-    const {userName, setUsername} = useUser();
+    const [userName, setUsername] = useState('');
     const [passWord, setPassword] = useState('');
     const [showMessage, setShowMessage] = useState(false);
     const [messageContent, setMessageContent] = useState('');
@@ -40,12 +39,11 @@ export default function UserLogin({ setIsAuthenticated, setRole }){
 
             if(response.status === 200){
                 setIsAuthenticated(true);
-                setRole(response.data.role);
+                setRole(response.data.role);   
                 localStorage.setItem('isAuthenticated', 'true');
                 localStorage.setItem('userName', response.data.userName);
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('role', response.data.role);
-                setUsername(response.data.userName);
 
                 if(response.data.role === 'admin'){
                     navigate('/admin_dashboard');

@@ -1,4 +1,4 @@
-.ad-Container{
+.d-Container{
     display: flex;
     margin-inline: auto;
     margin: 0 20px;
@@ -12,46 +12,46 @@
     border-radius: 20px;
 }
 
-.ad-Box-Container-1{
+.d-Box-Container-1{
     flex: 0;
     background-color: rgb(70, 70, 70);
     padding: 20px;
 }
 
-.ad-Navbar-Container{
+.d-Navbar-Container{
     text-align: center;
     margin: 80px 30px;
 }
 
-.ad-Nav-Container{
+.d-Nav-Container{
     margin: 50px 0;
     text-align: center;
 }
 
-.ad-Nav-Item{
+.d-Nav-Item{
     margin: 20px 0;
     cursor: pointer;
     font-family: sans-serif;
     font-weight: bold;
 }
 
-.ad-Link-Item{
+.d-Link-Item{
     white-space: nowrap;
     text-decoration: none;
     color: white;
 }
 
-.ad-Nav-Item:hover{  
+.d-Nav-Item:hover{
     transition: .5s ease;
     text-shadow: 1px 0 0 white;
 }
 
-.ad-Nav-Item:not(hover){
+.d-Nav-Item:not(hover){
     transition: .5s ease;
     text-shadow: none;
 }
 
-.ad-Box-Container-2{
+.d-Box-Container-2{
     display: flex;
     flex: 1;
     background-color: rgb(70, 70, 70);

@@ -1,5 +1,6 @@
 import User from '../Models/User.js'
 import userFeedback from '../Models/userFeedback.js'
+import Item from '../Models/Item.js'
 import dotenv from 'dotenv'
 import fs from 'fs' 
 import { format } from 'date-fns'
@@ -140,6 +141,27 @@ const logoutUser = async (req, res)=> {
     }
 };
 
+//Admin Control
+
+const newUser = async (req, res)=>{
+    const { firstName, lastName, userName, passWord, address, age, position, startedDate } = req.body;
+    
+    try{    
+        const existUser = await User.findOne({userName});
+        if(existUser){
+            return res.status(400).json({message: 'User already exits'});
+        }
+
+        const newUser = new User({firstName, lastName, userName, passWord, address, age, position, startedDate});    
+        await newUser.save();
+
+        res.status(201).json({message: 'User was created successfully'});
+    }catch(error){
+        console.error(error);
+        res.status(500).json({message: 'Error on Saving Information of User'});
+    }
+};
+
 const findUser = async (req, res)=> {
     const {firstName, lastName} = req.query;
 
@@ -176,25 +198,6 @@ const findUsers = async (req, res)=> {
     }
 };
 
-const newUser = async (req, res)=>{
-    const { firstName, lastName, userName, passWord, address, age, position, startedDate} = req.body;
-    
-    try{    
-        const existUser = await User.findOne({userName});
-        if(existUser){
-            return res.status(400).json({message: 'User already exits'});
-        }
-
-        const newUser = new User({firstName, lastName, userName, passWord, address, age, position, startedDate});    
-        await newUser.save();
-
-        res.status(201).json({message: 'User was created successfully'});
-    }catch(error){
-        console.error(error);
-        res.status(500).json({message: 'Error on Saving Information of User'});
-    }
-};
-
 const updateUser = async (req, res)=> {
     const {firstName, lastName, userName, passWord, address, age, position, startedDate} = req.body;
 
@@ -208,6 +211,9 @@ const updateUser = async (req, res)=> {
         const user = await User.findOne(query);
 
         if(user){
+            if (!user)
+                return res.status(404).json({message: 'User was not found'});
+
             if(user.role === 'admin')
                 return res.status(403).json({message: 'Cannot update an admin user'});
 
@@ -224,7 +230,7 @@ const updateUser = async (req, res)=> {
             const result = await User.updateOne(query, {$set: update});
 
             if(result.matchedCount > 0){
-                if(result.matchedCount > 0){
+                if(result.modifiedCount > 0){
                     res.status(200).json({message: 'User updated successfully'});
                 }else{
                     res.status(200).json({message: 'User exists but no changes were made'});
@@ -290,15 +296,119 @@ const sendFeedback = async(req, res)=> {
     }
 }
 
-const userControllers = {
+//Item Control
+
+const newItem = async(req, res)=> {
+    const { numberOfitems, itemPicture, itemName, startedDate, expirationDate, itemPrice, itemDiscount } = req.body;
+
+    try{
+        const existItem = await Item.findOne(itemName);
+        if(existItem){
+            return res.status(400).json({message: 'Item already exits'});
+        }
+
+        const newItem = new Item({numberOfitems, itemPicture, itemName, startedDate, expirationDate, itemPrice, itemDiscount});
+        await newItem.save();
+
+        res.status(201).json({message: 'Item was created successfully'});
+    }catch(error){
+        console.error(error);
+        res.status(500).json({message: 'Error on Saving Information of Item'})
+    }
+}
+
+const findItem = async(req, res)=> {
+    try{
+        const itemName = req.query;
+
+        const result = await Item.findOne(itemName);
+
+        if(result){
+            res.status(200).json(result);
+        }else{
+            return res.status(404).json({message: 'Item was not found'});
+        }
+    }catch(error){
+        console.error(error);
+        res.status(404).json({message: 'Error on Receiving Information of Item'});
+    }
+}
+
+const findItems = async(req, res)=> {
+    try{
+        const result = await Item.find();
+
+        if(result.length > 0)
+            return res.status(200).json(result);
+        else
+            return res.status(404).json({message: 'Item was not found'});
+    }catch(error){
+        console.error(error);
+        res.status(404).json({message: 'Error on Receiving Information of Item'});
+    }
+}
+
+const updateItem = async(req, res)=> {
+    const { numberOfitems, itemPicture, itemName, startedDate, expirationDate, itemPrice, itemDiscount } = req.body;
+
+    if(!itemName){
+        return res.status(400).json({message: 'Item name is required'});
+    }
+
+    try{
+        const query = { itemName };
+
+        const item = await Item.findOne(query);
+
+        if(item){
+            const update = {};
+            if (numberOfitems) update.numberOfitems = numberOfitems;
+            if (itemPicture) update.itemPicture = itemPicture; 
+            if (itemName) update.itemName = itemName;
+            if (startedDate) update.startedDate = startedDate;
+            if (expirationDate) update.expirationDate = expirationDate;
+            if (itemPrice) update.itemPrice = itemPrice;
+            if (itemDiscount) update.itemDiscount = itemDiscount;
+
+            const result = await Item.updateOne(query, {$set: update});
+
+            if(result.matchedCount > 0){
+                if(result.modifiedCount > 0){
+                    res.status(200).json({message: 'Item update successfully'});
+                }else{
+                    res.status(200).json({message: 'Item exists but no changes were made'});
+                }
+            }else{
+                res.status(404).json({message: 'Item was not found'});
+            }
+        }else{
+            res.status(404).json({message: 'Item was not found'});
+        }
+    }catch(error){
+        console.error(error);
+        res.status(500).json({message: 'Server Error'})
+    }
+}
+
+const deleteItem = async(req, res)=> {
+    //TODO: It will be deleted by a button in the Show Items
+
+}
+
+const authControllers = {
     loginUser,
     logoutUser,
+    newUser,
     findUser,
     findUsers,
-    newUser,
     updateUser,
     deleteUser,
+    newItem,
+    findItem,
+    findItems,
+    updateItem,
+    deleteItem,
     sendFeedback,
 }
 
-export default userControllers;
+export default authControllers;

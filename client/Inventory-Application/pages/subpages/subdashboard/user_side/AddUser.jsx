@@ -58,8 +58,7 @@ export default function AddUser(){
                 }
             })
             
-            if(response.status === 201)
-            {
+            if(response.status === 201){
                 setMessageContent("New user was been added");
                 setShowMessage(true); 
                 setFirstname('');
@@ -77,7 +76,7 @@ export default function AddUser(){
             }
             
         }catch(error){
-            console.error("Error:", error.response ? error.response.data : error.message);
+            console.error("Error: ", error.response ? error.response.data : error.message);
             setMessageContent("An error occurred while adding the user: " + (error.response ? error.response.data.message : error.message));
             setShowMessage(true);
         }
