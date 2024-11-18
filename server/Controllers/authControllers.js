@@ -6,6 +6,8 @@ import fs from 'fs'
 import { format } from 'date-fns'
 import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
+import path from 'path'
+import multer from 'multer'
 
 dotenv.config();
 
@@ -14,6 +16,17 @@ const logsDirPath = './Logs';
 const adminLogsFilePath = './Logs/admin_logs.txt';
 const userLogsFilePath = './Logs/user_logs.txt';
 const envFilePath = './.env';
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/'); 
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname)); 
+    },
+  });
+  
+const upload = multer({ storage });
 
 function generatedKey(){
     return crypto.randomBytes(32).toString('hex')
@@ -299,10 +312,12 @@ const sendFeedback = async(req, res)=> {
 //Item Control
 
 const newItem = async(req, res)=> {
-    const { numberOfitems, itemPicture, itemName, startedDate, expirationDate, itemPrice, itemDiscount } = req.body;
+    const { numberOfitems, itemName, startedDate, expirationDate, itemPrice, itemDiscount } = req.body;
 
     try{
-        const existItem = await Item.findOne(itemName);
+        const itemPicture = req.file ? `/uploads/${req.file.filename}` : null;
+
+        const existItem = await Item.findOne({itemName: itemName});
         if(existItem){
             return res.status(400).json({message: 'Item already exits'});
         }
@@ -338,9 +353,9 @@ const findItems = async(req, res)=> {
     try{
         const result = await Item.find();
 
-        if(result.length > 0)
+        if(result.length > 0){
             return res.status(200).json(result);
-        else
+        }else
             return res.status(404).json({message: 'Item was not found'});
     }catch(error){
         console.error(error);
@@ -349,7 +364,7 @@ const findItems = async(req, res)=> {
 }
 
 const updateItem = async(req, res)=> {
-    const { numberOfitems, itemPicture, itemName, startedDate, expirationDate, itemPrice, itemDiscount } = req.body;
+    const { numberOfitems, itemName, startedDate, expirationDate, itemPrice, itemDiscount } = req.body;
 
     if(!itemName){
         return res.status(400).json({message: 'Item name is required'});
@@ -357,6 +372,11 @@ const updateItem = async(req, res)=> {
 
     try{
         const query = { itemName };
+
+        let itemPicture = item.itemPicture; 
+        if (req.file) {
+        itemPicture = `/uploads/${req.file.filename}`; 
+        }
 
         const item = await Item.findOne(query);
 
@@ -391,8 +411,20 @@ const updateItem = async(req, res)=> {
 }
 
 const deleteItem = async(req, res)=> {
-    //TODO: It will be deleted by a button in the Show Items
+    const { itemName } = req.body;
 
+    try{
+        const result = await Item.deleteOne(itemName);
+
+        if(result.deletedCount > 0){
+            res.status(200).json({message: 'Item deleted successfully'});
+        }else{
+            res.status(404).json({message: 'Item was not found'});
+        }
+    }catch(error){
+        console.error(error);
+        res.status(404).json({message: 'Error on Deleting Information of User'});
+    }
 }
 
 const authControllers = {

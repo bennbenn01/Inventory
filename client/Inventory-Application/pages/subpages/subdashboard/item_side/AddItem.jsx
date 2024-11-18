@@ -16,6 +16,17 @@ export default function AddItem(){
     const [messageContent, setMessageContent] = useState('');
     const token = localStorage.getItem('token');
 
+    const formData = new FormData();
+    
+    formData.append('numberOfitems', numberOfitems);
+    formData.append('itemPicture', itemPicture); 
+    formData.append('itemName', itemName);
+    formData.append('startedDate', startedDate);
+    formData.append('expirationDate', expirationDate);
+    formData.append('itemPrice', itemPrice);
+    formData.append('itemDiscount', itemDiscount);
+
+
     const handleFileChange = (e)=> {
         const selectedFile = e.target.files[0];
         if(selectedFile){
@@ -40,7 +51,7 @@ export default function AddItem(){
                 return;
             }
 
-            if(itemPrice < 0.00){
+            if(itemPrice < 0){
                 setMessageContent("The price of item should not be less than 0");
                 setShowMessage(true);
                 return;
@@ -52,17 +63,9 @@ export default function AddItem(){
                 return;    
             }
     
-            const response = await axios.post(import.meta.env, {
-                numberOfitems: Number(numberOfitems),
-                itemPicture,
-                itemName,
-                startedDate,
-                expirationDate,
-                itemPrice: Number(itemPrice),
-                itemDiscount: Number(itemDiscount),
-            }, {
+            const response = await axios.post(import.meta.env.VITE_APP_SERVER_NEW_ITEM, formData, {
                 headers: {
-                    "Content-Type": 'application/json',
+                    "Content-Type": 'multipart/form-data',
                     "Authorization": `Bearer ${token}`
                 }
             })
@@ -73,6 +76,7 @@ export default function AddItem(){
                 setNumberofitems('');
                 setItempicture(null);
                 setItemname('');
+                setStarteddate('');
                 setExpirationdate('');
                 setItemprice('');
                 setItemdiscount('');
@@ -104,7 +108,7 @@ export default function AddItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter number of items'
                                 value={numberOfitems}
                                 className='d-AddItem-Form-Control-Sub-Col'
@@ -168,7 +172,7 @@ export default function AddItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter Item Price'
                                 value={itemPrice}
                                 className='d-AddItem-Form-Control-Sub-Col'
@@ -181,7 +185,7 @@ export default function AddItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter Item Discount'
                                 value={itemDiscount}
                                 className='d-AddItem-Form-Control-Sub-Col'

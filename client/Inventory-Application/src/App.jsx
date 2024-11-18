@@ -72,7 +72,7 @@ export default function App() {
                   <Route index element={<ShowItem/>}/>
                   <Route path='add_item' element={<AddItem/>}/>
 
-                  <Route path='show_item'/>
+                  <Route path='show_item' element={<ShowItem/>}/>
 
                   <Route path='update_item' element={<UpdateItem/>}/>
                   <Route path='settings' element={<Settings onToggleMode={toggleMode} isDarkMode={isDarkMode}/>}/>
