@@ -105,8 +105,8 @@ export default function ShowItem(){
         <>
             <Container className='d-ShowItem-Table-Container'>
                 <Container>
-                    <h1 className=''>List of Items</h1>
-
+                    <h1 className='d-ShowItem-Table-Title'>List of Items</h1>
+                    
                     <Form.Control
                         type='text'
                         placeholder='Search Item'
@@ -115,7 +115,7 @@ export default function ShowItem(){
                         onChange={(e)=> setItemname(e.target.value)}
                     />
 
-                    <Button className='d-ShowItem-Form-Button'
+                    <Button className='d-ShowItem-Table-Button'
                             onClick={handleShowItem}>Search</Button>
                 </Container>
 
@@ -148,8 +148,8 @@ export default function ShowItem(){
                                                 <Image
                                                     src={`${import.meta.env.VITE_APP_SERVER_BACKEND_PORT}${item.itemPicture}`}
                                                     alt={item.itemName}
-                                                    width={100}
-                                                    height={100}
+                                                    width={50}
+                                                    height={50}
                                                 />   
                                             </>                                    
                                         ) : (
