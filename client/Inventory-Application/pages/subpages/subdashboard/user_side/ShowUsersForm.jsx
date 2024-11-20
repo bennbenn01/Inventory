@@ -32,8 +32,8 @@ export default function ShowUsersForm(){
                 }
             })
             
-            const users = Array.isArray(response.data) ? response.data : [response.data];
-            localStorage.setItem('users', JSON.stringify(users)); 
+            const user = Array.isArray(response.data) ? response.data : [response.data];
+            localStorage.setItem('users', JSON.stringify(user)); 
             navigate('/admin_dashboard/show_users/show_users_table');
         }catch(error){
             console.error(error.response ? error.response.data : error.message);

@@ -9,6 +9,7 @@ export default function ShowItem(){
     const [items, setItems] = useState([]);
     const [itemName, setItemname] = useState('');
     const [showMessage, setShowMessage] = useState(false);
+    const [selectedItemName, setSelectedItemName] = useState(null);
     const [messageContent, setMessageContent] = useState('');
     const [showQuestionMessage, setShowQuestionmessage] = useState(false);
     const [questionMessagecontent, setQuestionMessageContent] = useState('');
@@ -17,17 +18,28 @@ export default function ShowItem(){
     const handleShowItem = async(e)=> {
         e.preventDefault();
 
+        if(!itemName){
+            setMessageContent("Please enter an item to be searched");
+            setShowMessage(true);
+        }
+
         try{
             const response = await axios.get(import.meta.env.VITE_APP_SERVER_FIND_ITEM, {
-                itemName
-            },{
+                params: { itemName },
                 headers: {
                     "Content-Type": 'application/json',
                     "Authorization": `Bearer ${token}`
                 }
             })
 
-            
+            const item = Array.isArray(response.data) ? response.data : [response.data];
+
+            if(response.status === 200){
+                setItems(item);
+            }else{
+                setMessageContent("No Item was found");
+                setShowMessage(true);
+            }
         }catch(error){
             console.error(error.response ? error.response.data : error.message);
             setMessageContent("An error occurred while getting information of the item: " + 
@@ -46,11 +58,14 @@ export default function ShowItem(){
                     }
                 })
 
-                const items = Array.isArray(response.data) ? response.data : [response.data];
+                const items = Array.isArray(response.data) ? response.data : [];
                 setItems(items);
             }catch(error){
-                if(error.response = []){
+                if (Array.isArray(error.response?.data) && error.response.data.length === 0) {
                     setMessageContent("No Items found");
+                    setShowMessage(true);
+                } else {
+                    setMessageContent("An error occurred while getting the information of the item: " + (error.response ? error.response.data.message : error.message));
                     setShowMessage(true);
                 }
             }
@@ -59,17 +74,20 @@ export default function ShowItem(){
         handleShowItems();
     },[token]);
 
-    const handleDeleteItem = ()=> {
+    const handleDeleteItem = (itemName)=> {
         setQuestionMessageContent("Do you want to Delete the Item?")
         setShowQuestionmessage(true);
+        setSelectedItemName(itemName);
     }
 
     const handleCloseMessage = ()=> {
         setShowMessage(false);
     }
 
-    const handleYesButton = async(itemName, e)=> {
+    const handleYesButton = async(e)=> {
         e.preventDefault();
+
+        setShowQuestionmessage(false);
 
         try{
             const response = await axios.delete(import.meta.env.VITE_APP_SERVER_DELETE_ITEM, {
@@ -78,14 +96,14 @@ export default function ShowItem(){
                     "Authorization": `Bearer ${token}`
                 },
                 data: {
-                    id: itemName  
+                    itemName: selectedItemName
                 }
             })
 
             if(response.status === 200){
                 setMessageContent("The Item has been deleted successfully");
                 setShowMessage(true);
-                setItems((prevItems) => prevItems.filter((item) => item.itemName !== itemName)); 
+                setItems((prevItems) => prevItems.filter((item) => item.itemName !== selectedItemName)); 
             }else{
                 setMessageContent("Failed to delete a item: " + response.data.message);
                 setShowMessage(true);
@@ -161,11 +179,11 @@ export default function ShowItem(){
                                     <td className='d-ShowItem-TD-Row'>{item.itemName|| 'N/A'}</td>
                                     <td className='d-ShowItem-TD-Row'>{item.startedDate|| 'N/A'}</td>
                                     <td className='d-ShowItem-TD-Row'>{item.expirationDate|| 'N/A'}</td>
-                                    <td className='d-ShowItem-TD-Row'>{`${item.itemPrice}`|| 'N/A'}</td>
+                                    <td className='d-ShowItem-TD-Row'>{`$${item.itemPrice}`|| 'N/A'}</td>
                                     <td className='d-ShowItem-TD-Row'>{`${item.itemDiscount}%`|| 'N/A'}</td>
                                     <td className='d-ShowItem-TD-Row'><Button  
                                                                         className='d-ShowItem-TD-Row-Button'
-                                                                        onClick={(e)=> handleDeleteItem(item.itemName, e)}>Delete Button</Button></td>
+                                                                        onClick={()=> handleDeleteItem(item.itemName)}>Delete Button</Button></td>
                                 </tr>
                                 )
                             ))}

@@ -414,7 +414,7 @@ const deleteItem = async(req, res)=> {
     const { itemName } = req.body;
 
     try{
-        const result = await Item.deleteOne(itemName);
+        const result = await Item.deleteOne({ itemName });
 
         if(result.deletedCount > 0){
             res.status(200).json({message: 'Item deleted successfully'});

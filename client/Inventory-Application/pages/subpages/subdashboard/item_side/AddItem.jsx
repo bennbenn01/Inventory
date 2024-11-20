@@ -74,7 +74,7 @@ export default function AddItem(){
                 setMessageContent("New item was been added");
                 setShowMessage(true);
                 setNumberofitems('');
-                setItempicture(null);
+                setFileName("")
                 setItemname('');
                 setStarteddate('');
                 setExpirationdate('');
