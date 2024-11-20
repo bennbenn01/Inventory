@@ -106,17 +106,19 @@ export default function ShowItem(){
             <Container className='d-ShowItem-Table-Container'>
                 <Container>
                     <h1 className='d-ShowItem-Table-Title'>List of Items</h1>
-                    
-                    <Form.Control
-                        type='text'
-                        placeholder='Search Item'
-                        value={itemName}
-                        className='d-ShowItem-Form-Control'
-                        onChange={(e)=> setItemname(e.target.value)}
-                    />
 
-                    <Button className='d-ShowItem-Table-Button'
-                            onClick={handleShowItem}>Search</Button>
+                    <Container className='d-ShowItem-Search-Container'>
+                        <Form.Control
+                            type='text'
+                            placeholder='Search Item'
+                            value={itemName}
+                            className='d-ShowItem-Form-Control'
+                            onChange={(e)=> setItemname(e.target.value)}
+                        />
+
+                        <Button className='d-ShowItem-Table-Button'
+                                onClick={handleShowItem}>Search</Button>
+                    </Container>
                 </Container>
 
                 <Container className='d-ShowItem-Scrollbar'>
