@@ -8,6 +8,7 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import path from 'path'
 import multer from 'multer'
+import { fileURLToPath } from 'url'
 
 dotenv.config();
 
@@ -16,6 +17,13 @@ const logsDirPath = './Logs';
 const adminLogsFilePath = './Logs/admin_logs.txt';
 const userLogsFilePath = './Logs/user_logs.txt';
 const envFilePath = './.env';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadsDir = path.join(__dirname, '..', 'uploads');
+
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -24,7 +32,7 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
       cb(null, Date.now() + path.extname(file.originalname)); 
     },
-  });
+});
   
 const upload = multer({ storage });
 
@@ -163,7 +171,7 @@ const newUser = async (req, res)=>{
         const existUser = await User.findOne({userName});
         if(existUser){
             return res.status(400).json({message: 'User already exits'});
-        }
+        }      
 
         const newUser = new User({firstName, lastName, userName, passWord, address, age, position, startedDate});    
         await newUser.save();
