@@ -1,1 +1,0 @@
-This is a Basic CRUD System using MongoDB, Express.js, React, Node.js
