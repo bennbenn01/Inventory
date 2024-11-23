@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <>
-      <Router>
+      <Router basename='/Inventory/docs'>
         <Routes>
           <Route path='/login' element={<UserLogin setIsAuthenticated={setIsAuthenticated} setRole={setRole}/>}/>
 
