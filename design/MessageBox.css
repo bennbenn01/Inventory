@@ -1,0 +1,47 @@
+.m-Box-Container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50; 
+}
+
+.m-Content {
+    background: white;
+    font-size: 18px;
+    font-family: sans-serif;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    z-index: 51; 
+}
+
+.m-Button-Container{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.m-Button{
+    cursor: pointer;
+    border: 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.m-Button:hover{
+    transition: 1s ease;
+    background-color: rgb(165, 165, 165);
+}
+
+.m-Button:not(:hover){
+    transition: 1s ease;
+    background-color: white;
+}

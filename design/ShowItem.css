@@ -1,0 +1,83 @@
+.d-ShowItem-Table-Container{
+    background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.d-ShowItem-Table-Title{
+    margin: 10px 0;
+    cursor: default;
+    text-align: center;
+    font-family: sans-serif;
+    color: white;
+}
+
+.d-ShowItem-Search-Container{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.d-ShowItem-Form-Control{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.d-ShowItem-Table-Button{
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.d-ShowItem-Table-Button:hover{
+    transition: 1s ease;
+    background-color: rgb(145, 145, 145);
+}
+
+.d-ShowItem-Table-Button:not(:hover){
+    transition: 1s ease;
+    background-color: white;
+}
+
+.d-ShowItem-Scrollbar{
+    overflow-y: auto;
+}
+
+.d-ShowItem-THead-Container, .d-ShowItem-TBody-Container{
+    font-size: 12px;
+    font-family: sans-serif;
+    color: white;
+}
+
+.d-ShowItem-TH-Row{
+    padding: 10px;
+}
+
+.d-ShowItem-TD-Colspan{
+    text-align: center;
+}
+
+.d-ShowItem-TD-Row{
+    text-align: center;
+}
+
+.d-ShowItem-TD-Row-Button{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.d-ShowItem-TD-Row-Button:hover{
+    transition: 1s ease;
+    background-color: rgb(145, 145, 145);
+}
+
+.d-ShowItem-TD-Row-Button:not(:hover){
+    transition: 1s ease;
+    background-color: white;
+}
