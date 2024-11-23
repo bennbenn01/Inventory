@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://bennbenn01.github.io/Inventory/",
+  "homepage": "https://bennbenn01.github.io/Inventory",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
