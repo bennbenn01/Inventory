@@ -26,7 +26,6 @@ export default function AddItem(){
     formData.append('itemPrice', itemPrice);
     formData.append('itemDiscount', itemDiscount);
 
-
     const handleFileChange = (e)=> {
         const selectedFile = e.target.files[0];
         if(selectedFile){

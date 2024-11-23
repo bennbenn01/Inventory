@@ -16,6 +16,16 @@ export default function UpdateItem(){
     const [messageContent, setMessageContent] = useState('');
     const token = localStorage.getItem('token');
 
+    const formData = new FormData();
+
+    formData.append('numberOfitems', numberOfitems);
+    formData.append('itemPicture', itemPicture); 
+    formData.append('itemName', itemName);
+    formData.append('startedDate', startedDate);
+    formData.append('expirationDate', expirationDate);
+    formData.append('itemPrice', itemPrice);
+    formData.append('itemDiscount', itemDiscount);
+
     const handleFileChange = (e)=> {
         const selectedFile = e.target.files[0];
         if(selectedFile){
@@ -97,7 +107,7 @@ export default function UpdateItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter number of items'
                                 value={numberOfitems}
                                 className='d-UpdateItem-Form-Control-Sub-Col'
@@ -161,7 +171,7 @@ export default function UpdateItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter Item Price'
                                 value={itemPrice}
                                 className='d-UpdateItem-Form-Control-Sub-Col'
@@ -174,7 +184,7 @@ export default function UpdateItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter Item Discount'
                                 value={itemDiscount}
                                 className='d-UpdateItem-Form-Control-Sub-Col'
