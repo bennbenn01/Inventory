@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/Inventory/',
   build: {
-    outDir: 'dist',
+    outDir: 'build',
     sourcemap: true,
   },
 })
