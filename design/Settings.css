@@ -1,0 +1,46 @@
+.d-Settings-Form-Main-Container{
+    background-color: rgb(40, 40, 40);
+    border-radius: 20px;
+    padding: 50px;
+}
+
+.d-Settings-Form-Title{
+    margin: 10px;
+    cursor: default;
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+}
+
+.d-Settings-Sub-Container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 0;
+}
+
+.d-Settings-Form-Label{
+    color: white;
+    font-size: 20px;
+    font-family: sans-serif;
+    margin: 0 5px;
+}
+
+.d-Settings-Form-Button{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.d-Settings-Form-Button:hover{
+    transition: 1s ease;
+    background-color: rgb(145, 145, 145);
+}
+
+.d-Settings-Form-Button:not(hover){
+    transition: 1s ease;
+    background-color: white;
+}
+
