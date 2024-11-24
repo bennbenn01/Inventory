@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import UserLogin from '../pages/UserLogin.jsx'
 import Header from '../pages/subpages/Header.jsx'
@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <>
-      <Router basename='/Inventory'>
+      <Router>
         <Routes>
           <Route path='/login' element={<UserLogin setIsAuthenticated={setIsAuthenticated} setRole={setRole}/>}/>
 

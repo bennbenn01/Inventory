@@ -371,50 +371,53 @@ const findItems = async(req, res)=> {
     }
 }
 
-const updateItem = async(req, res)=> {
+const updateItem = async (req, res) => {
     const { numberOfitems, itemName, startedDate, expirationDate, itemPrice, itemDiscount } = req.body;
 
-    if(!itemName){
-        return res.status(400).json({message: 'Item name is required'});
+    if (!itemName) {
+        return res.status(400).json({ message: 'Item name is required' });
     }
 
-    try{
+    try {
         const query = { itemName };
 
-        let itemPicture = item.itemPicture; 
-        if (req.file) {
-        itemPicture = `/uploads/${req.file.filename}`; 
-        }
+        let itemPicture = null;
 
         const item = await Item.findOne(query);
 
-        if(item){
+        if (item) {
+            if (req.file) {
+                itemPicture = `/uploads/${req.file.filename}`;
+            } else {
+                itemPicture = item.itemPicture; 
+            }
+
             const update = {};
             if (numberOfitems) update.numberOfitems = numberOfitems;
-            if (itemPicture) update.itemPicture = itemPicture; 
+            if (itemPicture) update.itemPicture = itemPicture;
             if (itemName) update.itemName = itemName;
             if (startedDate) update.startedDate = startedDate;
             if (expirationDate) update.expirationDate = expirationDate;
             if (itemPrice) update.itemPrice = itemPrice;
             if (itemDiscount) update.itemDiscount = itemDiscount;
 
-            const result = await Item.updateOne(query, {$set: update});
+            const result = await Item.updateOne(query, { $set: update });
 
-            if(result.matchedCount > 0){
-                if(result.modifiedCount > 0){
-                    res.status(200).json({message: 'Item update successfully'});
-                }else{
-                    res.status(200).json({message: 'Item exists but no changes were made'});
+            if (result.matchedCount > 0) {
+                if (result.modifiedCount > 0) {
+                    res.status(200).json({ message: 'Item updated successfully' });
+                } else {
+                    res.status(200).json({ message: 'Item exists but no changes were made' });
                 }
-            }else{
-                res.status(404).json({message: 'Item was not found'});
+            } else {
+                res.status(404).json({ message: 'Item not found' });
             }
-        }else{
-            res.status(404).json({message: 'Item was not found'});
+        } else {
+            res.status(404).json({ message: 'Item not found' });
         }
-    }catch(error){
+    } catch (error) {
         console.error(error);
-        res.status(500).json({message: 'Server Error'})
+        res.status(500).json({ message: 'Server Error' });
     }
 }
 

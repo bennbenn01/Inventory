@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/Inventory/',
-  define: {
-    'process.env': process.env,
+  build: {
+    outDir: 'build',
+    sourcemap: true,
   },
 })

@@ -16,6 +16,16 @@ export default function UpdateItem(){
     const [messageContent, setMessageContent] = useState('');
     const token = localStorage.getItem('token');
 
+    const formData = new FormData();
+
+    formData.append('numberOfitems', numberOfitems);
+    formData.append('itemPicture', itemPicture); 
+    formData.append('itemName', itemName);
+    formData.append('startedDate', startedDate);
+    formData.append('expirationDate', expirationDate);
+    formData.append('itemPrice', itemPrice);
+    formData.append('itemDiscount', itemDiscount);
+
     const handleFileChange = (e)=> {
         const selectedFile = e.target.files[0];
         if(selectedFile){
@@ -23,13 +33,60 @@ export default function UpdateItem(){
         }
     }
 
-    const handleUpdateItem = (e)=> {
+    const handleUpdateItem = async(e)=> {
         e.preventDefault();
 
         try{
+            if(!itemPicture || !itemName || !expirationDate || !itemPrice ||
+                !itemDiscount){
+                setMessageContent("Please Fill-Up the Form");
+                setShowMessage(true);
+                return;
+            }
 
+            if(numberOfitems < 0){
+                setMessageContent("The number of items should not be less than 0");
+                setShowMessage(true);
+                return;
+            }
+
+            if(itemPrice < 0){
+                setMessageContent("The price of item should not be less than 0");
+                setShowMessage(true);
+                return;
+            }
+
+            if(itemDiscount < 0){
+                setMessageContent("The discount number should not be less than 0");
+                setShowMessage(true);
+                return;    
+            }
+
+            const response = await axios.put(import.meta.env.VITE_APP_SERVER_UPDATE_ITEM, formData, {
+                headers: {
+                    "Content-Type": 'multipart/form-data',
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+
+            if(response.status === 200){
+                setMessageContent("Item was been updated");
+                setShowMessage(true);
+                setNumberofitems('');
+                setItempicture(null);
+                setItemname('');
+                setStarteddate('');
+                setExpirationdate('');
+                setItemprice('');
+                setItemdiscount('');
+            }else{
+                setMessageContent("Failed to update the item's information: " + response.data.message);
+                setShowMessage(true);
+            }
         }catch(error){
-            
+            console.error("Error: ", error.response ? error.response.data : error.message);
+            setMessageContent("An error occurred while updating the item: " + (error.response ? error.response.data.message : error.message));
+            setShowMessage(true); 
         }
     }
 
@@ -50,7 +107,7 @@ export default function UpdateItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter number of items'
                                 value={numberOfitems}
                                 className='d-UpdateItem-Form-Control-Sub-Col'
@@ -114,7 +171,7 @@ export default function UpdateItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter Item Price'
                                 value={itemPrice}
                                 className='d-UpdateItem-Form-Control-Sub-Col'
@@ -127,7 +184,7 @@ export default function UpdateItem(){
 
                         <Col md={2}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 placeholder='Enter Item Discount'
                                 value={itemDiscount}
                                 className='d-UpdateItem-Form-Control-Sub-Col'
