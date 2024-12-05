@@ -170,7 +170,7 @@ const newUser = async (req, res)=>{
     try{    
         const existUser = await User.findOne({userName});
         if(existUser){
-            return res.status(400).json({message: 'User already exits'});
+            return res.status(400).json({message: 'User already exist'});
         }      
 
         const newUser = new User({firstName, lastName, userName, passWord, address, age, position, startedDate});    
@@ -327,7 +327,7 @@ const newItem = async(req, res)=> {
 
         const existItem = await Item.findOne({itemName: itemName});
         if(existItem){
-            return res.status(400).json({message: 'Item already exits'});
+            return res.status(400).json({message: 'Item already exist'});
         }
 
         const newItem = new Item({numberOfitems, itemPicture, itemName, startedDate, expirationDate, itemPrice, itemDiscount});
